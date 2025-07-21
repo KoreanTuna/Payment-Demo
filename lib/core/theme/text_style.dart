@@ -65,6 +65,23 @@ extension EmotionBarnTextStyle on TextStyle {
     fontVariations: const <FontVariation>[FontVariation('wght', 700)],
   );
 
+  TextStyle get subTitle5 => copyWith(
+    fontSize: 16,
+    fontFamily: pretendardFontFamily,
+    height: 1.2,
+    letterSpacing: 0,
+    color: ColorStyle.gray850,
+    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
+  );
+  TextStyle get subTitle6 => copyWith(
+    fontSize: 14,
+    fontFamily: pretendardFontFamily,
+    height: 1.2,
+    letterSpacing: 0,
+    color: ColorStyle.gray850,
+    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
+  );
+
   TextStyle get body1 => copyWith(
     fontSize: 16,
     fontFamily: pretendardFontFamily,

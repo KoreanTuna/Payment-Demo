@@ -31,7 +31,7 @@ class CustomButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: applyBackgroundColor
-              ? (isEnabled ? ColorStyle.primary500 : Colors.grey)
+              ? (isEnabled ? ColorStyle.primary500 : ColorStyle.gray200)
               : Colors.transparent,
           border: applyBorderColor
               ? Border.all(color: ColorStyle.primary500)
@@ -40,15 +40,11 @@ class CustomButton extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () {},
+            onTap: isEnabled && !isLoading ? onPressed : null,
             child: Align(
               child: Container(
                 height: 48,
                 width: width,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 24,
-                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -67,7 +63,7 @@ class CustomButton extends StatelessWidget {
                                 (applyBackgroundColor
                                     ? (isEnabled
                                           ? Colors.white
-                                          : ColorStyle.gray700)
+                                          : ColorStyle.gray400)
                                     : ColorStyle.gray700),
                           ),
                         ),

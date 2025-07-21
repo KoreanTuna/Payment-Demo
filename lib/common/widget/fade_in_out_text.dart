@@ -10,8 +10,15 @@ class FadeInOutText extends StatelessWidget {
     required this.onFadeOutFinished,
   });
 
+  /// 애니메이션 적용 텍스트
   final String text;
+
+  /// 텍스트 스타일
+  /// 기본값은 [TextStyle().subTitle1]
   final TextStyle? style;
+
+  /// FadeOut 애니메이션이 끝났을 때 호출되는 콜백
+  /// [FadeOutDown] 위젯의 onFinish 콜백으로 호출됨
   final VoidCallback onFadeOutFinished;
 
   @override
