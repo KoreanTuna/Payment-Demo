@@ -31,16 +31,15 @@ extension EmotionBarnTextStyle on TextStyle {
   );
 
   TextStyle get subTitle1 => copyWith(
-    fontSize: 20,
+    fontSize: 28,
     fontFamily: pretendardFontFamily,
     height: 1.2,
     letterSpacing: 0,
     color: ColorStyle.gray850,
     fontVariations: const <FontVariation>[FontVariation('wght', 700)],
   );
-
   TextStyle get subTitle2 => copyWith(
-    fontSize: 18,
+    fontSize: 24,
     fontFamily: pretendardFontFamily,
     height: 1.2,
     letterSpacing: 0,
@@ -49,7 +48,16 @@ extension EmotionBarnTextStyle on TextStyle {
   );
 
   TextStyle get subTitle3 => copyWith(
-    fontSize: 16,
+    fontSize: 20,
+    fontFamily: pretendardFontFamily,
+    height: 1.2,
+    letterSpacing: 0,
+    color: ColorStyle.gray850,
+    fontVariations: const <FontVariation>[FontVariation('wght', 700)],
+  );
+
+  TextStyle get subTitle4 => copyWith(
+    fontSize: 18,
     fontFamily: pretendardFontFamily,
     height: 1.2,
     letterSpacing: 0,
@@ -82,5 +90,14 @@ extension EmotionBarnTextStyle on TextStyle {
     letterSpacing: 0,
     color: ColorStyle.gray850,
     fontVariations: const <FontVariation>[FontVariation('wght', 500)],
+  );
+
+  TextStyle get button => copyWith(
+    fontSize: 16,
+    fontFamily: pretendardFontFamily,
+    height: 1.2,
+    letterSpacing: 0,
+    color: ColorStyle.gray850,
+    fontVariations: const <FontVariation>[FontVariation('wght', 700)],
   );
 }

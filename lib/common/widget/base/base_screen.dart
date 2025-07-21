@@ -53,7 +53,15 @@ abstract class BaseScreen extends HookConsumerWidget {
             appBar: renderAppBar(context, ref),
             backgroundColor: baseBackgroundColor,
             resizeToAvoidBottomInset: baseResizeToAvoidBottomInset,
-            body: buildScreen(context, ref),
+            body: Padding(
+              padding: applyBodyPadding
+                  ? const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 8.0,
+                    )
+                  : EdgeInsets.zero,
+              child: buildScreen(context, ref),
+            ),
           ),
         ),
       ),

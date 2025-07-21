@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:payment_demo/core/router/route_path.dart';
 import 'package:payment_demo/core/router/router_observer.dart';
 import 'package:payment_demo/environment/getit.dart';
+import 'package:payment_demo/presentation/auth/entry/presentation/entry_screen.dart';
 import 'package:payment_demo/presentation/splash/splash.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -52,6 +53,15 @@ abstract class GoRouterModule {
             pageBuilder: (context, state) => buildFadeTransitionPage(
               state: state,
               child: const SplashScreen(),
+            ),
+          ),
+          GoRoute(
+            path: RoutePath.entry,
+            name: RoutePath.entry,
+            builder: (context, state) => const EntryScreen(),
+            pageBuilder: (context, state) => buildFadeTransitionPage(
+              state: state,
+              child: const EntryScreen(),
             ),
           ),
         ],
