@@ -5,9 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:payment_demo/common/widget/base/base_screen.dart';
 import 'package:payment_demo/common/widget/custom_appbar.dart';
 import 'package:payment_demo/common/widget/custom_button.dart';
-import 'package:payment_demo/presentation/auth/presentation/widget/info_input_widget.dart';
+import 'package:payment_demo/core/extension/string.extension.dart';
+import 'package:payment_demo/presentation/auth/domain/entities/sign_up_form_entity.dart';
+import 'package:payment_demo/presentation/auth/presentation/state/sign_up_event.dart';
+import 'package:payment_demo/presentation/auth/presentation/state/sign_up_state.dart';
+import 'package:payment_demo/presentation/auth/presentation/widget/sign_up_info_input_widget.dart';
+import 'package:payment_demo/presentation/auth/presentation/widget/sign_up_terms_agree_widget.dart';
 
-class SignUpScreen extends BaseScreen {
+class SignUpScreen extends BaseScreen with SignUpEvent, SignUpState {
   const SignUpScreen({super.key});
 
   @override
@@ -26,6 +31,9 @@ class SignUpScreen extends BaseScreen {
   @override
   Widget buildScreen(BuildContext context, WidgetRef ref) {
     final ScrollController scrollController = useScrollController();
+
+    /// 회원가입 폼 상태 관리
+    final SignUpFormEntity signUpFormState = getSignUpFormState(ref);
 
     useEffect(
       () {
@@ -50,45 +58,41 @@ class SignUpScreen extends BaseScreen {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InfoInputWidget(
-                    title: '이메일',
-                    hintText: '이메일을 입력하세요',
-                    onChanged: (value) {
-                      // 이메일 입력 처리
-                    },
+                  SignUpInfoInputWidget(
+                    onChangedEmail: (String email) =>
+                        onChangedEmail(ref: ref, email: email),
+                    onChangedPassword: (String password) =>
+                        onChangedPassword(ref: ref, password: password),
+                    onChangedConfirmPassword: (String passwordConfirm) =>
+                        onChangedPasswordConfirm(
+                          ref: ref,
+                          passwordConfirm: passwordConfirm,
+                        ),
+                    onEmailCertificationPressed: () {},
+                    isEmailCertifiedEnabled: signUpFormState.email
+                        .isValidEmail(),
                   ),
-                  const SizedBox(height: 12),
-                  const CustomButton(
-                    label: '이메일 인증하기',
-                    isEnabled: false,
-                  ),
-                  const SizedBox(height: 12),
-
-                  InfoInputWidget(
-                    title: '비밀번호',
-                    hintText: '비밀번호를 입력하세요',
-                    onChanged: (value) {
-                      // 비밀번호 입력 처리
-                    },
-                    isObscureText: true,
-                  ),
-                  const SizedBox(height: 12),
-                  InfoInputWidget(
-                    title: '비밀번호 재입력',
-                    hintText: '비밀번호를 한 번 더 입력해주세요',
-                    onChanged: (value) {
-                      // 비밀번호 입력 처리
-                    },
-                    isObscureText: true,
+                  SignUpTermsAgreeWidget(
+                    currentSignUpFormState: signUpFormState,
+                    onTermsChanged: ({required value}) => onChangeTermsAgree(
+                      ref: ref,
+                      isTermsAgree: value,
+                    ),
+                    onPrivacyPolicyChanged: ({required value}) =>
+                        onChangePrivacyAgree(
+                          ref: ref,
+                          isPrivacyAgree: value,
+                        ),
                   ),
                 ],
               ),
             ],
           ),
         ),
-        const CustomButton(
+        CustomButton(
           label: '회원가입 완료',
-          isEnabled: false,
+          onPressed: () {},
+          isEnabled: signUpFormState.isValid,
         ),
       ],
     );

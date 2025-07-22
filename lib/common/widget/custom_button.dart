@@ -24,6 +24,28 @@ class CustomButton extends StatelessWidget {
   final bool applyBorderColor;
   final Color? textColor;
 
+  factory CustomButton.border({
+    required String label,
+    double? width,
+    VoidCallback? onPressed,
+    bool isLoading = false,
+    bool isEnabled = true,
+    Color? textColor,
+    bool applyBackgroundColor = false,
+    bool applyBorderColor = true,
+  }) {
+    return CustomButton(
+      label: label,
+      width: width,
+      onPressed: onPressed,
+      isLoading: isLoading,
+      isEnabled: isEnabled,
+      applyBackgroundColor: applyBackgroundColor,
+      applyBorderColor: applyBorderColor,
+      textColor: textColor,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -33,8 +55,11 @@ class CustomButton extends StatelessWidget {
           color: applyBackgroundColor
               ? (isEnabled ? ColorStyle.primary500 : ColorStyle.gray200)
               : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
           border: applyBorderColor
-              ? Border.all(color: ColorStyle.primary500)
+              ? Border.all(
+                  color: isEnabled ? ColorStyle.primary500 : ColorStyle.gray400,
+                )
               : null,
         ),
         child: Material(
@@ -64,7 +89,9 @@ class CustomButton extends StatelessWidget {
                                     ? (isEnabled
                                           ? Colors.white
                                           : ColorStyle.gray400)
-                                    : ColorStyle.gray700),
+                                    : isEnabled
+                                    ? ColorStyle.primary500
+                                    : ColorStyle.gray400),
                           ),
                         ),
                 ),
