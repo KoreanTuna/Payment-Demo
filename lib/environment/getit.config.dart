@@ -24,12 +24,12 @@ import 'package:payment_demo/feature/auth/domain/repository/sign_up_repository.d
     as _i955;
 import 'package:payment_demo/feature/auth/domain/usecase/sign_up_usecase.dart'
     as _i395;
-import 'package:payment_demo/feature/card/data/repository/card_scan_repository_impl.dart'
-    as _i1068;
-import 'package:payment_demo/feature/card/domain/repository/card_scan_repository.dart'
-    as _i589;
-import 'package:payment_demo/feature/card/domain/usecase/card_scan_usecase.dart'
-    as _i18;
+import 'package:payment_demo/feature/card_scan/data/repository/card_scan_repository_impl.dart'
+    as _i968;
+import 'package:payment_demo/feature/card_scan/domain/repository/card_scan_repository.dart'
+    as _i104;
+import 'package:payment_demo/feature/card_scan/domain/usecase/card_scan_usecase.dart'
+    as _i534;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -50,21 +50,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i148.RouterObserver>(() => _i148.RouterObserver());
     gh.singleton<_i361.Dio>(() => dioModule.createGitHubDio());
     gh.singleton<_i583.GoRouter>(() => goRouterModule.router);
-    gh.lazySingleton<_i589.CardScanRepository>(
-      () => _i1068.CardScanRepositoryImpl(),
-    );
     gh.lazySingleton<_i955.SignUpRepository>(
       () => _i516.SignUpRepositoryImpl(),
     );
-    gh.lazySingleton<_i18.CardScanUsecase>(
-      () => _i18.CardScanUsecase(
-        gh<_i589.CardScanRepository>(),
-        gh<_i745.FormDataUtil>(),
-      ),
+    gh.lazySingleton<_i104.CardScanRepository>(
+      () => _i968.CardScanRepositoryImpl(),
     );
     gh.singleton<_i846.SharedPrefUtil>(
       () => _i846.SharedPrefUtil(
         sharedPreferences: gh<_i460.SharedPreferences>(),
+      ),
+    );
+    gh.lazySingleton<_i534.CardScanUsecase>(
+      () => _i534.CardScanUsecase(
+        gh<_i104.CardScanRepository>(),
+        gh<_i745.FormDataUtil>(),
       ),
     );
     gh.singleton<_i395.SignUpUsecase>(

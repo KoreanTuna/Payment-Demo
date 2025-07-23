@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:payment_demo/core/exception/custom_exception.dart';
 import 'package:payment_demo/core/util/form_data_util.dart';
 import 'package:payment_demo/core/util/result.dart';
-import 'package:payment_demo/feature/card/domain/entities/card_scan_entity.dart';
-import 'package:payment_demo/feature/card/domain/repository/card_scan_repository.dart';
+import 'package:payment_demo/feature/card_scan/domain/entities/card_scan_entity.dart';
+import 'package:payment_demo/feature/card_scan/domain/repository/card_scan_repository.dart';
 
 @lazySingleton
 class CardScanUsecase {

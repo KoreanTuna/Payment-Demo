@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:payment_demo/core/exception/custom_exception.dart';
 import 'package:payment_demo/core/util/result.dart';
-import 'package:payment_demo/feature/card/data/models/card_scan_model.dart';
-import 'package:payment_demo/feature/card/domain/entities/card_scan_entity.dart';
-import 'package:payment_demo/feature/card/domain/repository/card_scan_repository.dart';
+import 'package:payment_demo/feature/card_scan/data/models/card_scan_model.dart';
+import 'package:payment_demo/feature/card_scan/domain/entities/card_scan_entity.dart';
+import 'package:payment_demo/feature/card_scan/domain/repository/card_scan_repository.dart';
 
 @LazySingleton(as: CardScanRepository)
 class CardScanRepositoryImpl implements CardScanRepository {

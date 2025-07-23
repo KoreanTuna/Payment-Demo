@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:payment_demo/common/domain/entities/user_entity.dart';
+import 'package:payment_demo/common/provider/state/user_state.dart';
 import 'package:payment_demo/common/widget/base/base_screen.dart';
+import 'package:payment_demo/common/widget/card_widget.dart';
 import 'package:payment_demo/core/router/route_path.dart';
 import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/theme/text_style.dart';
+import 'package:payment_demo/feature/home/presentation/widget/card_register_widget.dart';
 
-class HomeScreen extends BaseScreen {
+class HomeScreen extends BaseScreen with UserState {
   const HomeScreen({super.key});
 
   @override
@@ -14,6 +18,7 @@ class HomeScreen extends BaseScreen {
 
   @override
   Widget buildScreen(BuildContext context, WidgetRef ref) {
+    final UserEntity user = getUser(ref);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,54 +30,22 @@ class HomeScreen extends BaseScreen {
           children: [
             Text(
               '카드를 미리 예약하세요',
-              style: const TextStyle().subTitle5,
+              style: const TextStyle().subTitle4,
             ),
             Text(
               '입국 후 바로 픽업할 수 있어요',
-              style: const TextStyle().body2,
+              style: const TextStyle().body1,
             ),
           ],
         ),
         const SizedBox(height: 16),
 
-        /// 카드 등록
-        ///
-        GestureDetector(
-          onTap: () => context.pushNamed(RoutePath.cardScan),
-          child: Container(
-            width: double.infinity,
-            height: 200,
-            decoration: BoxDecoration(
-              color: ColorStyle.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: const [
-                BoxShadow(
-                  color: ColorStyle.gray300,
-                  spreadRadius: 4,
-                  blurRadius: 8,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.add_rounded,
-                  size: 40,
-                  color: ColorStyle.coolGray500,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '카드 등록하기',
-                  style: const TextStyle().body2.copyWith(
-                    color: ColorStyle.gray700,
-                  ),
-                ),
-              ],
-            ),
+        if (user.cards.isNotEmpty)
+          const Card3D()
+        else
+          CardRegisterWidget(
+            onTap: () => context.pushNamed(RoutePath.cardScan),
           ),
-        ),
       ],
     );
   }

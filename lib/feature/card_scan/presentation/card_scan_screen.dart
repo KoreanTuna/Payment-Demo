@@ -9,10 +9,10 @@ import 'package:payment_demo/common/widget/dialog/error_dialog.dart';
 import 'package:payment_demo/core/router/route_path.dart';
 import 'package:payment_demo/core/util/logger.dart';
 import 'package:payment_demo/core/util/result.dart';
-import 'package:payment_demo/feature/card/domain/entities/card_scan_entity.dart';
-import 'package:payment_demo/feature/card/presentation/provider/card_scan_provider.dart';
-import 'package:payment_demo/feature/card/presentation/state/card_scan_state.dart';
-import 'package:payment_demo/feature/card/presentation/widget/card_camera_view.dart';
+import 'package:payment_demo/feature/card_scan/domain/entities/card_scan_entity.dart';
+import 'package:payment_demo/feature/card_scan/presentation/provider/card_scan_provider.dart';
+import 'package:payment_demo/feature/card_scan/presentation/state/card_scan_state.dart';
+import 'package:payment_demo/feature/card_scan/presentation/widget/card_camera_view.dart';
 
 class CardScanScreen extends BaseScreen with CardScanState {
   @override

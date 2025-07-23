@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:payment_demo/common/provider/state/user_event.dart';
 import 'package:payment_demo/common/widget/base/base_screen.dart';
 import 'package:payment_demo/common/widget/custom_appbar.dart';
 import 'package:payment_demo/common/widget/custom_button.dart';
@@ -9,11 +10,12 @@ import 'package:payment_demo/common/widget/info_input_row.dart';
 import 'package:payment_demo/core/router/route_path.dart';
 import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/theme/text_style.dart';
-import 'package:payment_demo/feature/card/domain/entities/card_scan_entity.dart';
-import 'package:payment_demo/feature/card/presentation/state/card_scan_event.dart';
-import 'package:payment_demo/feature/card/presentation/state/card_scan_state.dart';
+import 'package:payment_demo/feature/card_scan/domain/entities/card_scan_entity.dart';
+import 'package:payment_demo/feature/card_scan/presentation/state/card_scan_event.dart';
+import 'package:payment_demo/feature/card_scan/presentation/state/card_scan_state.dart';
 
-class CardInfoInputScreen extends BaseScreen with CardScanState, CardScanEvent {
+class CardInfoInputScreen extends BaseScreen
+    with CardScanState, CardScanEvent, UserEvent {
   const CardInfoInputScreen({super.key});
   @override
   PreferredSizeWidget? renderAppBar(BuildContext context, WidgetRef ref) {
@@ -136,7 +138,13 @@ class CardInfoInputScreen extends BaseScreen with CardScanState, CardScanEvent {
         ),
         CustomButton(
           label: '카드 등록',
-          onPressed: () => context.goNamed(RoutePath.home),
+          onPressed: () {
+            updateUserCards(
+              ref: ref,
+              cards: [cardScan],
+            );
+            context.goNamed(RoutePath.home);
+          },
           isEnabled: cardScan.isValid,
         ),
       ],
