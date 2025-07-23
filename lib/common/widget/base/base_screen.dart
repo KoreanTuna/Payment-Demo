@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:payment_demo/common/widget/base/provider/base_loading_provider.dart';
+import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/util/logger.dart';
 
 /// 앱의 화면 페이지를 생성하는 유틸리티 클래스
@@ -13,6 +14,8 @@ abstract class BaseScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bool isLoading = ref.watch(baseLoadingProvider);
+
     useEffect(() {
       onInit(ref, context);
       return () {
@@ -42,31 +45,50 @@ abstract class BaseScreen extends HookConsumerWidget {
     });
     return Container(
       color: baseBackgroundColor,
-      child: SafeArea(
-        top: setTopSafeArea,
-        bottom: setBottomSafeArea,
-        left: setLeftSafeArea,
-        right: setRightSafeArea,
-        child: PopScope(
-          canPop: canPop,
-          child: Scaffold(
-            appBar: renderAppBar(context, ref),
-            backgroundColor: baseBackgroundColor,
-            resizeToAvoidBottomInset: baseResizeToAvoidBottomInset,
-            body: Padding(
-              padding: applyBodyPadding
-                  ? const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8.0,
-                    )
-                  : EdgeInsets.zero,
-              child: buildScreen(context, ref),
+      child: Stack(
+        children: [
+          SafeArea(
+            top: setTopSafeArea,
+            bottom: setBottomSafeArea,
+            left: setLeftSafeArea,
+            right: setRightSafeArea,
+            child: PopScope(
+              canPop: canPop,
+              child: Scaffold(
+                appBar: renderAppBar(context, ref),
+                backgroundColor: baseBackgroundColor,
+                resizeToAvoidBottomInset: baseResizeToAvoidBottomInset,
+                body: Padding(
+                  padding: applyBodyPadding
+                      ? const EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                          vertical: 8.0,
+                        )
+                      : EdgeInsets.zero,
+                  child: buildScreen(context, ref),
+                ),
+              ),
             ),
           ),
-        ),
+          if (isLoading)
+            Container(
+              color: ColorStyle.gray850.withValues(alpha: 0.7),
+              child: const Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              ),
+            ),
+        ],
       ),
     );
   }
+
+  @protected
+  void setLoading(WidgetRef ref) =>
+      ref.read(baseLoadingProvider.notifier).setLoading();
+
+  @protected
+  void clearLoading(WidgetRef ref) =>
+      ref.read(baseLoadingProvider.notifier).reset();
 
   @protected
   PreferredSizeWidget? renderAppBar(BuildContext context, WidgetRef ref) =>

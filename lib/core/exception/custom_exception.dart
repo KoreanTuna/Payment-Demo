@@ -16,3 +16,7 @@ sealed class CustomException implements Exception {
 class CustomFormatException extends CustomException {
   CustomFormatException(super.message);
 }
+
+class CustomNetworkException extends CustomException {
+  CustomNetworkException(super.message);
+}

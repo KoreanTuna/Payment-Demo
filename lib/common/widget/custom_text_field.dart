@@ -7,6 +7,7 @@ import 'package:payment_demo/core/theme/text_style.dart';
 class CustomTextField extends HookConsumerWidget {
   const CustomTextField({
     super.key,
+    this.initialValue,
     this.onChanged,
     this.hintText,
     this.isObscureText = false,
@@ -14,21 +15,25 @@ class CustomTextField extends HookConsumerWidget {
   });
 
   final void Function(String)? onChanged;
+  final String? initialValue;
   final String? hintText;
   final bool isObscureText;
   final bool isDisabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController controller = useTextEditingController();
+    final TextEditingController controller = useTextEditingController(
+      text: initialValue,
+    );
     final FocusNode focusNode = useFocusNode();
 
     return TextField(
       controller: controller,
+
       focusNode: focusNode,
       obscureText: isObscureText,
       enabled: !isDisabled,
-      style: TextStyle().body1.copyWith(
+      style: const TextStyle().body1.copyWith(
         color: isDisabled ? ColorStyle.coolGray300 : ColorStyle.gray850,
       ),
 

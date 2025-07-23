@@ -4,9 +4,12 @@ import 'package:injectable/injectable.dart';
 import 'package:payment_demo/core/router/route_path.dart';
 import 'package:payment_demo/core/router/router_observer.dart';
 import 'package:payment_demo/environment/getit.dart';
-import 'package:payment_demo/presentation/auth/presentation/entry_screen.dart';
-import 'package:payment_demo/presentation/auth/presentation/sign_up_screen.dart';
-import 'package:payment_demo/presentation/splash/splash.dart';
+import 'package:payment_demo/feature/auth/presentation/entry_screen.dart';
+import 'package:payment_demo/feature/auth/presentation/sign_up_screen.dart';
+import 'package:payment_demo/feature/card/presentation/card_manual_input_screen.dart';
+import 'package:payment_demo/feature/card/presentation/card_scan_screen.dart';
+import 'package:payment_demo/feature/home/presentation/home_screen.dart';
+import 'package:payment_demo/feature/splash/splash.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -76,6 +79,33 @@ abstract class GoRouterModule {
                 routes: [],
               ),
             ],
+          ),
+          GoRoute(
+            path: RoutePath.home,
+            name: RoutePath.home,
+            builder: (context, state) => const HomeScreen(),
+            pageBuilder: (context, state) => buildFadeTransitionPage(
+              state: state,
+              child: const HomeScreen(),
+            ),
+          ),
+          GoRoute(
+            path: RoutePath.cardScan,
+            name: RoutePath.cardScan,
+            builder: (context, state) => const CardScanScreen(),
+            pageBuilder: (context, state) => buildFadeTransitionPage(
+              state: state,
+              child: const CardScanScreen(),
+            ),
+          ),
+          GoRoute(
+            path: RoutePath.cardInfoInput,
+            name: RoutePath.cardInfoInput,
+            builder: (context, state) => const CardInfoInputScreen(),
+            pageBuilder: (context, state) => buildFadeTransitionPage(
+              state: state,
+              child: const CardInfoInputScreen(),
+            ),
           ),
         ],
       ),
