@@ -40,7 +40,7 @@ class HomeScreen extends BaseScreen with UserState {
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
 
         if (user.cards.isNotEmpty)
           const Card3D()
@@ -49,11 +49,11 @@ class HomeScreen extends BaseScreen with UserState {
             onTap: () => context.pushNamed(RoutePath.cardScan),
           ),
 
-        const SizedBox(height: 24),
+        const SizedBox(height: 12),
 
-        Row(
+        const Row(
           spacing: 12,
-          children: const [
+          children: [
             _HomeMenuButton(
               label: '내 예약',
               imagePath: PngImagePath.payInteraction3d,
@@ -69,7 +69,7 @@ class HomeScreen extends BaseScreen with UserState {
           ],
         ),
 
-        const SizedBox(height: 24),
+        const SizedBox(height: 12),
 
         const _BenefitButton(),
       ],
@@ -116,7 +116,7 @@ class _HomeMenuButton extends StatelessWidget {
               ),
               Text(
                 label,
-                style: const TextStyle().body2,
+                style: const TextStyle().body1,
               ),
             ],
           ),

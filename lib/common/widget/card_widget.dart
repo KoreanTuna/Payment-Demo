@@ -70,46 +70,43 @@ class _Card3DState extends State<Card3D> with SingleTickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             /// 카드
-            Padding(
-              padding: const EdgeInsets.only(bottom: 68),
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      width: double.infinity,
-                      height: 200,
-                      PngImagePath.card,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Container(
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
                     width: double.infinity,
                     height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      gradient: RadialGradient(
-                        center: gradientCenter,
-                        radius: 1.4,
-                        colors: [
-                          Colors.transparent,
-                          Colors.white.withValues(alpha: 0.08),
-                          Colors.white.withValues(alpha: 0.15),
-                        ],
-
-                        stops: const [0.0, 0.6, 1.0],
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black38,
-                          blurRadius: 2,
-                          offset: Offset(0, 1),
-                        ),
-                      ],
-                    ),
+                    PngImagePath.card,
+                    fit: BoxFit.cover,
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    gradient: RadialGradient(
+                      center: gradientCenter,
+                      radius: 1.4,
+                      colors: [
+                        Colors.transparent,
+                        Colors.white.withValues(alpha: 0.08),
+                        Colors.white.withValues(alpha: 0.15),
+                      ],
+
+                      stops: const [0.0, 0.6, 1.0],
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black38,
+                        blurRadius: 2,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),
