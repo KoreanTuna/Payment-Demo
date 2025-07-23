@@ -10,11 +10,13 @@ class CustomTextField extends HookConsumerWidget {
     this.onChanged,
     this.hintText,
     this.isObscureText = false,
+    this.isDisabled = false,
   });
 
   final void Function(String)? onChanged;
   final String? hintText;
   final bool isObscureText;
+  final bool isDisabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,12 +27,22 @@ class CustomTextField extends HookConsumerWidget {
       controller: controller,
       focusNode: focusNode,
       obscureText: isObscureText,
-      style: const TextStyle().body1,
+      enabled: !isDisabled,
+      style: TextStyle().body1.copyWith(
+        color: isDisabled ? ColorStyle.coolGray300 : ColorStyle.gray850,
+      ),
 
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle().body1.copyWith(
           color: ColorStyle.coolGray300,
+        ),
+        fillColor: isDisabled ? ColorStyle.gray400 : ColorStyle.white,
+        focusColor: isDisabled ? ColorStyle.gray400 : ColorStyle.white,
+
+        disabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          borderSide: BorderSide(color: ColorStyle.coolGray300),
         ),
 
         focusedBorder: const OutlineInputBorder(

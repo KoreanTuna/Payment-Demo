@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SignUpFormEntity {
 
- String get email; String get password; String get confirmPassword; bool get isAgreedToTerms; bool get isAgreedToPrivacyPolicy;
+ String get email; String get password; String get confirmPassword; bool get isAgreedToTerms; bool get isAgreedToPrivacyPolicy; bool get isEmailCertifiedRequested; bool get isEmailVerified;
 /// Create a copy of SignUpFormEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SignUpFormEntityCopyWith<SignUpFormEntity> get copyWith => _$SignUpFormEntityCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignUpFormEntity&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword)&&(identical(other.isAgreedToTerms, isAgreedToTerms) || other.isAgreedToTerms == isAgreedToTerms)&&(identical(other.isAgreedToPrivacyPolicy, isAgreedToPrivacyPolicy) || other.isAgreedToPrivacyPolicy == isAgreedToPrivacyPolicy));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignUpFormEntity&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword)&&(identical(other.isAgreedToTerms, isAgreedToTerms) || other.isAgreedToTerms == isAgreedToTerms)&&(identical(other.isAgreedToPrivacyPolicy, isAgreedToPrivacyPolicy) || other.isAgreedToPrivacyPolicy == isAgreedToPrivacyPolicy)&&(identical(other.isEmailCertifiedRequested, isEmailCertifiedRequested) || other.isEmailCertifiedRequested == isEmailCertifiedRequested)&&(identical(other.isEmailVerified, isEmailVerified) || other.isEmailVerified == isEmailVerified));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,email,password,confirmPassword,isAgreedToTerms,isAgreedToPrivacyPolicy);
+int get hashCode => Object.hash(runtimeType,email,password,confirmPassword,isAgreedToTerms,isAgreedToPrivacyPolicy,isEmailCertifiedRequested,isEmailVerified);
 
 @override
 String toString() {
-  return 'SignUpFormEntity(email: $email, password: $password, confirmPassword: $confirmPassword, isAgreedToTerms: $isAgreedToTerms, isAgreedToPrivacyPolicy: $isAgreedToPrivacyPolicy)';
+  return 'SignUpFormEntity(email: $email, password: $password, confirmPassword: $confirmPassword, isAgreedToTerms: $isAgreedToTerms, isAgreedToPrivacyPolicy: $isAgreedToPrivacyPolicy, isEmailCertifiedRequested: $isEmailCertifiedRequested, isEmailVerified: $isEmailVerified)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $SignUpFormEntityCopyWith<$Res>  {
   factory $SignUpFormEntityCopyWith(SignUpFormEntity value, $Res Function(SignUpFormEntity) _then) = _$SignUpFormEntityCopyWithImpl;
 @useResult
 $Res call({
- String email, String password, String confirmPassword, bool isAgreedToTerms, bool isAgreedToPrivacyPolicy
+ String email, String password, String confirmPassword, bool isAgreedToTerms, bool isAgreedToPrivacyPolicy, bool isEmailCertifiedRequested, bool isEmailVerified
 });
 
 
@@ -65,13 +65,15 @@ class _$SignUpFormEntityCopyWithImpl<$Res>
 
 /// Create a copy of SignUpFormEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? password = null,Object? confirmPassword = null,Object? isAgreedToTerms = null,Object? isAgreedToPrivacyPolicy = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? password = null,Object? confirmPassword = null,Object? isAgreedToTerms = null,Object? isAgreedToPrivacyPolicy = null,Object? isEmailCertifiedRequested = null,Object? isEmailVerified = null,}) {
   return _then(_self.copyWith(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,confirmPassword: null == confirmPassword ? _self.confirmPassword : confirmPassword // ignore: cast_nullable_to_non_nullable
 as String,isAgreedToTerms: null == isAgreedToTerms ? _self.isAgreedToTerms : isAgreedToTerms // ignore: cast_nullable_to_non_nullable
 as bool,isAgreedToPrivacyPolicy: null == isAgreedToPrivacyPolicy ? _self.isAgreedToPrivacyPolicy : isAgreedToPrivacyPolicy // ignore: cast_nullable_to_non_nullable
+as bool,isEmailCertifiedRequested: null == isEmailCertifiedRequested ? _self.isEmailCertifiedRequested : isEmailCertifiedRequested // ignore: cast_nullable_to_non_nullable
+as bool,isEmailVerified: null == isEmailVerified ? _self.isEmailVerified : isEmailVerified // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -157,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String email,  String password,  String confirmPassword,  bool isAgreedToTerms,  bool isAgreedToPrivacyPolicy)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String email,  String password,  String confirmPassword,  bool isAgreedToTerms,  bool isAgreedToPrivacyPolicy,  bool isEmailCertifiedRequested,  bool isEmailVerified)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SignUpFormEntity() when $default != null:
-return $default(_that.email,_that.password,_that.confirmPassword,_that.isAgreedToTerms,_that.isAgreedToPrivacyPolicy);case _:
+return $default(_that.email,_that.password,_that.confirmPassword,_that.isAgreedToTerms,_that.isAgreedToPrivacyPolicy,_that.isEmailCertifiedRequested,_that.isEmailVerified);case _:
   return orElse();
 
 }
@@ -178,10 +180,10 @@ return $default(_that.email,_that.password,_that.confirmPassword,_that.isAgreedT
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String email,  String password,  String confirmPassword,  bool isAgreedToTerms,  bool isAgreedToPrivacyPolicy)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String email,  String password,  String confirmPassword,  bool isAgreedToTerms,  bool isAgreedToPrivacyPolicy,  bool isEmailCertifiedRequested,  bool isEmailVerified)  $default,) {final _that = this;
 switch (_that) {
 case _SignUpFormEntity():
-return $default(_that.email,_that.password,_that.confirmPassword,_that.isAgreedToTerms,_that.isAgreedToPrivacyPolicy);case _:
+return $default(_that.email,_that.password,_that.confirmPassword,_that.isAgreedToTerms,_that.isAgreedToPrivacyPolicy,_that.isEmailCertifiedRequested,_that.isEmailVerified);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +200,10 @@ return $default(_that.email,_that.password,_that.confirmPassword,_that.isAgreedT
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String email,  String password,  String confirmPassword,  bool isAgreedToTerms,  bool isAgreedToPrivacyPolicy)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String email,  String password,  String confirmPassword,  bool isAgreedToTerms,  bool isAgreedToPrivacyPolicy,  bool isEmailCertifiedRequested,  bool isEmailVerified)?  $default,) {final _that = this;
 switch (_that) {
 case _SignUpFormEntity() when $default != null:
-return $default(_that.email,_that.password,_that.confirmPassword,_that.isAgreedToTerms,_that.isAgreedToPrivacyPolicy);case _:
+return $default(_that.email,_that.password,_that.confirmPassword,_that.isAgreedToTerms,_that.isAgreedToPrivacyPolicy,_that.isEmailCertifiedRequested,_that.isEmailVerified);case _:
   return null;
 
 }
@@ -213,7 +215,7 @@ return $default(_that.email,_that.password,_that.confirmPassword,_that.isAgreedT
 @JsonSerializable()
 
 class _SignUpFormEntity implements SignUpFormEntity {
-  const _SignUpFormEntity({required this.email, required this.password, required this.confirmPassword, required this.isAgreedToTerms, required this.isAgreedToPrivacyPolicy});
+  const _SignUpFormEntity({required this.email, required this.password, required this.confirmPassword, required this.isAgreedToTerms, required this.isAgreedToPrivacyPolicy, required this.isEmailCertifiedRequested, required this.isEmailVerified});
   factory _SignUpFormEntity.fromJson(Map<String, dynamic> json) => _$SignUpFormEntityFromJson(json);
 
 @override final  String email;
@@ -221,6 +223,8 @@ class _SignUpFormEntity implements SignUpFormEntity {
 @override final  String confirmPassword;
 @override final  bool isAgreedToTerms;
 @override final  bool isAgreedToPrivacyPolicy;
+@override final  bool isEmailCertifiedRequested;
+@override final  bool isEmailVerified;
 
 /// Create a copy of SignUpFormEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignUpFormEntity&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword)&&(identical(other.isAgreedToTerms, isAgreedToTerms) || other.isAgreedToTerms == isAgreedToTerms)&&(identical(other.isAgreedToPrivacyPolicy, isAgreedToPrivacyPolicy) || other.isAgreedToPrivacyPolicy == isAgreedToPrivacyPolicy));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignUpFormEntity&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword)&&(identical(other.isAgreedToTerms, isAgreedToTerms) || other.isAgreedToTerms == isAgreedToTerms)&&(identical(other.isAgreedToPrivacyPolicy, isAgreedToPrivacyPolicy) || other.isAgreedToPrivacyPolicy == isAgreedToPrivacyPolicy)&&(identical(other.isEmailCertifiedRequested, isEmailCertifiedRequested) || other.isEmailCertifiedRequested == isEmailCertifiedRequested)&&(identical(other.isEmailVerified, isEmailVerified) || other.isEmailVerified == isEmailVerified));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,email,password,confirmPassword,isAgreedToTerms,isAgreedToPrivacyPolicy);
+int get hashCode => Object.hash(runtimeType,email,password,confirmPassword,isAgreedToTerms,isAgreedToPrivacyPolicy,isEmailCertifiedRequested,isEmailVerified);
 
 @override
 String toString() {
-  return 'SignUpFormEntity(email: $email, password: $password, confirmPassword: $confirmPassword, isAgreedToTerms: $isAgreedToTerms, isAgreedToPrivacyPolicy: $isAgreedToPrivacyPolicy)';
+  return 'SignUpFormEntity(email: $email, password: $password, confirmPassword: $confirmPassword, isAgreedToTerms: $isAgreedToTerms, isAgreedToPrivacyPolicy: $isAgreedToPrivacyPolicy, isEmailCertifiedRequested: $isEmailCertifiedRequested, isEmailVerified: $isEmailVerified)';
 }
 
 
@@ -255,7 +259,7 @@ abstract mixin class _$SignUpFormEntityCopyWith<$Res> implements $SignUpFormEnti
   factory _$SignUpFormEntityCopyWith(_SignUpFormEntity value, $Res Function(_SignUpFormEntity) _then) = __$SignUpFormEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String email, String password, String confirmPassword, bool isAgreedToTerms, bool isAgreedToPrivacyPolicy
+ String email, String password, String confirmPassword, bool isAgreedToTerms, bool isAgreedToPrivacyPolicy, bool isEmailCertifiedRequested, bool isEmailVerified
 });
 
 
@@ -272,13 +276,15 @@ class __$SignUpFormEntityCopyWithImpl<$Res>
 
 /// Create a copy of SignUpFormEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,Object? confirmPassword = null,Object? isAgreedToTerms = null,Object? isAgreedToPrivacyPolicy = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,Object? confirmPassword = null,Object? isAgreedToTerms = null,Object? isAgreedToPrivacyPolicy = null,Object? isEmailCertifiedRequested = null,Object? isEmailVerified = null,}) {
   return _then(_SignUpFormEntity(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,confirmPassword: null == confirmPassword ? _self.confirmPassword : confirmPassword // ignore: cast_nullable_to_non_nullable
 as String,isAgreedToTerms: null == isAgreedToTerms ? _self.isAgreedToTerms : isAgreedToTerms // ignore: cast_nullable_to_non_nullable
 as bool,isAgreedToPrivacyPolicy: null == isAgreedToPrivacyPolicy ? _self.isAgreedToPrivacyPolicy : isAgreedToPrivacyPolicy // ignore: cast_nullable_to_non_nullable
+as bool,isEmailCertifiedRequested: null == isEmailCertifiedRequested ? _self.isEmailCertifiedRequested : isEmailCertifiedRequested // ignore: cast_nullable_to_non_nullable
+as bool,isEmailVerified: null == isEmailVerified ? _self.isEmailVerified : isEmailVerified // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

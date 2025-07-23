@@ -48,7 +48,7 @@ extension GetItInjectableX on _i174.GetIt {
         sharedPreferences: gh<_i460.SharedPreferences>(),
       ),
     );
-    gh.lazySingleton<_i732.SignUpUsecase>(
+    gh.singleton<_i732.SignUpUsecase>(
       () => _i732.SignUpUsecase(gh<_i99.SignUpRepository>()),
     );
     return this;

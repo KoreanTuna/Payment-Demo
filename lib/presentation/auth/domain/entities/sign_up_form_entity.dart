@@ -12,6 +12,8 @@ abstract class SignUpFormEntity with _$SignUpFormEntity {
     required String confirmPassword,
     required bool isAgreedToTerms,
     required bool isAgreedToPrivacyPolicy,
+    required bool isEmailCertifiedRequested,
+    required bool isEmailVerified,
   }) = _SignUpFormEntity;
 
   factory SignUpFormEntity.initial() {
@@ -21,6 +23,8 @@ abstract class SignUpFormEntity with _$SignUpFormEntity {
       confirmPassword: '',
       isAgreedToTerms: false,
       isAgreedToPrivacyPolicy: false,
+      isEmailCertifiedRequested: false,
+      isEmailVerified: false,
     );
   }
 
@@ -37,6 +41,7 @@ extension SignUpFormEntityExtension on SignUpFormEntity {
         confirmPassword.isNotEmpty &&
         confirmPassword == password &&
         isAgreedToTerms &&
-        isAgreedToPrivacyPolicy;
+        isAgreedToPrivacyPolicy &&
+        isEmailCertifiedRequested;
   }
 }

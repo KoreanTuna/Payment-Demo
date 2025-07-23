@@ -13,6 +13,8 @@ _SignUpFormEntity _$SignUpFormEntityFromJson(Map<String, dynamic> json) =>
       confirmPassword: json['confirmPassword'] as String,
       isAgreedToTerms: json['isAgreedToTerms'] as bool,
       isAgreedToPrivacyPolicy: json['isAgreedToPrivacyPolicy'] as bool,
+      isEmailCertifiedRequested: json['isEmailCertifiedRequested'] as bool,
+      isEmailVerified: json['isEmailVerified'] as bool,
     );
 
 Map<String, dynamic> _$SignUpFormEntityToJson(_SignUpFormEntity instance) =>
@@ -22,4 +24,6 @@ Map<String, dynamic> _$SignUpFormEntityToJson(_SignUpFormEntity instance) =>
       'confirmPassword': instance.confirmPassword,
       'isAgreedToTerms': instance.isAgreedToTerms,
       'isAgreedToPrivacyPolicy': instance.isAgreedToPrivacyPolicy,
+      'isEmailCertifiedRequested': instance.isEmailCertifiedRequested,
+      'isEmailVerified': instance.isEmailVerified,
     };

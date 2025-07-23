@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:payment_demo/common/widget/base/base_screen.dart';
 import 'package:payment_demo/common/widget/custom_appbar.dart';
 import 'package:payment_demo/common/widget/custom_button.dart';
-import 'package:payment_demo/core/extension/string.extension.dart';
 import 'package:payment_demo/presentation/auth/domain/entities/sign_up_form_entity.dart';
 import 'package:payment_demo/presentation/auth/presentation/state/sign_up_event.dart';
 import 'package:payment_demo/presentation/auth/presentation/state/sign_up_state.dart';
@@ -58,20 +57,10 @@ class SignUpScreen extends BaseScreen with SignUpEvent, SignUpState {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SignUpInfoInputWidget(
-                    onChangedEmail: (String email) =>
-                        onChangedEmail(ref: ref, email: email),
-                    onChangedPassword: (String password) =>
-                        onChangedPassword(ref: ref, password: password),
-                    onChangedConfirmPassword: (String passwordConfirm) =>
-                        onChangedPasswordConfirm(
-                          ref: ref,
-                          passwordConfirm: passwordConfirm,
-                        ),
-                    onEmailCertificationPressed: () {},
-                    isEmailCertifiedEnabled: signUpFormState.email
-                        .isValidEmail(),
-                  ),
+                  /// 이메일 / 비밀번호 / 비밀번호 재입력 입력 위젯
+                  SignUpInfoInput(signUpFormState: signUpFormState),
+
+                  /// 약관 동의 입력 위젯
                   SignUpTermsAgreeWidget(
                     currentSignUpFormState: signUpFormState,
                     onTermsChanged: ({required value}) => onChangeTermsAgree(

@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:payment_demo/core/exception/custom_exception.dart';
 import 'package:payment_demo/core/extension/string.extension.dart';
 import 'package:payment_demo/core/util/result.dart';
 import 'package:payment_demo/presentation/auth/domain/entities/sign_up_form_entity.dart';
@@ -12,12 +13,13 @@ class SignUpRepositoryImpl implements SignUpRepository {
   }) async {
     /// 이메일 형식 검증
     if (email.isEmpty || !email.isValidEmail()) {
-      return const Result.error(FormatException('이메일 형식이 올바르지 않습니다.'));
+      return Result.error(CustomFormatException('이메일 형식이 올바르지 않습니다.'));
     }
 
     /// 이메일 인증 요청 시뮬레이션
     await Future.delayed(const Duration(milliseconds: 300));
     return const Result.ok(null);
+    // return Result.error(CustomFormatException('이메일 인증 요청 실패'));
   }
 
   @override
@@ -32,7 +34,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
   }) async {
     /// 이메일 인증 코드 검증 시뮬레이션
     if (code.isEmpty || code.length < 6) {
-      return const Result.error(FormatException('인증 코드가 올바르지 않습니다.'));
+      return Result.error(CustomFormatException('인증 코드가 올바르지 않습니다.'));
     }
 
     /// 인증 코드 검증 성공 시뮬레이션

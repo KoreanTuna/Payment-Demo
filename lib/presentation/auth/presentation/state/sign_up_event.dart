@@ -1,22 +1,23 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:payment_demo/core/util/result.dart';
 import 'package:payment_demo/presentation/auth/presentation/provider/sign_up_provider.dart';
 
 mixin class SignUpEvent {
   /// 이메일 인증요청
-  void requestEmailCertification({
+  Future<Result<void>> requestEmailCertification({
     required WidgetRef ref,
     required String email,
-  }) {
-    ref.read(signUpProvider.notifier).requestEmailCertification(email);
+  }) async {
+    return ref.read(signUpProvider.notifier).requestEmailCertification(email);
   }
 
   /// 이메일 인증번호 확인
-  Future<void> certifyEmailCode({
+  Future<Result<void>> certifyEmailCode({
     required WidgetRef ref,
     required String email,
     required String code,
   }) async {
-    await ref
+    return ref
         .read(signUpProvider.notifier)
         .certifyEmailCode(
           email: email,
@@ -73,6 +74,34 @@ mixin class SignUpEvent {
           ref
               .read(signUpProvider)
               .copyWith(isAgreedToPrivacyPolicy: isPrivacyAgree),
+        );
+  }
+
+  void onChangeEmailCertifyRequest({
+    required WidgetRef ref,
+    required bool isEmailCertifyRequested,
+  }) {
+    ref
+        .read(signUpProvider.notifier)
+        .setState(
+          ref
+              .read(signUpProvider)
+              .copyWith(
+                isEmailCertifiedRequested: isEmailCertifyRequested,
+              ),
+        );
+  }
+
+  void onChangeEmailCertifyCode({
+    required WidgetRef ref,
+    required bool isEmailCertifyCode,
+  }) {
+    ref
+        .read(signUpProvider.notifier)
+        .setState(
+          ref
+              .read(signUpProvider)
+              .copyWith(isEmailVerified: isEmailCertifyCode),
         );
   }
 }

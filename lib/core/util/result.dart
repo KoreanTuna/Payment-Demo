@@ -10,6 +10,8 @@
 /// }
 library;
 
+import 'package:payment_demo/core/exception/custom_exception.dart';
+
 /// Result result = await logic();
 /// result.when
 ///  (ok: (value) {
@@ -23,11 +25,11 @@ sealed class Result<T> {
   const Result();
 
   const factory Result.ok(T value) = Ok._;
-  const factory Result.error(Exception error) = Error._;
+  const factory Result.error(CustomException error) = Error._;
 
   void when({
     required void Function(T value) ok,
-    required void Function(Exception error) error,
+    required void Function(CustomException error) error,
   }) {
     if (this is Ok<T>) {
       ok((this as Ok<T>).value);
@@ -40,7 +42,7 @@ sealed class Result<T> {
 
   R map<R>({
     required R Function(T value) ok,
-    required R Function(Exception error) error,
+    required R Function(CustomException error) error,
   }) {
     if (this is Ok<T>) {
       return ok((this as Ok<T>).value);
@@ -66,7 +68,7 @@ final class Error<T> extends Result<T> {
   const Error._(this.error);
 
   /// Returned error in result
-  final Exception error;
+  final CustomException error;
   @override
   String toString() => 'Result<$T>.error($error)';
 }

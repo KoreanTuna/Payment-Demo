@@ -3,7 +3,7 @@ import 'package:payment_demo/core/util/result.dart';
 import 'package:payment_demo/presentation/auth/domain/entities/sign_up_form_entity.dart';
 import 'package:payment_demo/presentation/auth/domain/repository/sign_up_repository.dart';
 
-@lazySingleton
+@singleton
 class SignUpUsecase {
   SignUpUsecase(this._signUpRepository);
 
