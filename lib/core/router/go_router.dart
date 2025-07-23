@@ -6,7 +6,7 @@ import 'package:payment_demo/core/router/router_observer.dart';
 import 'package:payment_demo/environment/getit.dart';
 import 'package:payment_demo/feature/auth/presentation/entry_screen.dart';
 import 'package:payment_demo/feature/auth/presentation/sign_up_screen.dart';
-import 'package:payment_demo/feature/card/presentation/card_manual_input_screen.dart';
+import 'package:payment_demo/feature/card/presentation/card_info_input_screen.dart';
 import 'package:payment_demo/feature/card/presentation/card_scan_screen.dart';
 import 'package:payment_demo/feature/home/presentation/home_screen.dart';
 import 'package:payment_demo/feature/splash/splash.dart';
@@ -76,7 +76,6 @@ abstract class GoRouterModule {
                   state: state,
                   child: const SignUpScreen(),
                 ),
-                routes: [],
               ),
             ],
           ),

@@ -82,7 +82,10 @@ class _CardCameraViewScreenState extends State<CardCameraViewScreen> {
                             .catchError((error) {
                               // 에러 처리
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('이미지 캡처 실패: $error')),
+                                SnackBar(
+                                  content: Text('이미지 캡처 실패: $error'),
+                                  duration: const Duration(seconds: 2),
+                                ),
                               );
                             });
                       },

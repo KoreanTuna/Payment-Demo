@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -66,8 +65,8 @@ class CardScanScreen extends BaseScreen with CardScanState {
                         builder: (_) {
                           return ErrorDialog(
                             title: '카드 스캔 실패',
-                            message: '카드 스캔에 실패했습니다. 다시 시도해주세요.',
-                            onPrimaryAction: () => context.pop(),
+                            message: error.message,
+                            onPrimaryAction: context.pop,
                           );
                         },
                       );

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:payment_demo/core/exception/custom_exception.dart';
 import 'package:payment_demo/core/util/result.dart';
 import 'package:payment_demo/feature/card/data/models/card_scan_model.dart';
 import 'package:payment_demo/feature/card/domain/entities/card_scan_entity.dart';
@@ -16,6 +17,10 @@ class CardScanRepositoryImpl implements CardScanRepository {
       expirationMonth: 12,
     );
 
+    /// 실패케이스
+    // return Result.error(CustomNetworkException('카드 정보가 올바르지 않습니다.'));
+
+    /// 성공케이스
     /// REST API 통신 시뮬레이션
     return Future.delayed(
       const Duration(seconds: 2),
