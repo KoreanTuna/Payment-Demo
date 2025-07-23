@@ -38,7 +38,7 @@ final class CardScanProvider
   }
 }
 
-String _$cardScanHash() => r'55ad57374cbce1fdf6a232764c7cb49e7e270fd4';
+String _$cardScanHash() => r'5b1298e1f3fa17319b5f453a09d41b41f869e503';
 
 abstract class _$CardScan extends $Notifier<CardScanEntity> {
   CardScanEntity build();

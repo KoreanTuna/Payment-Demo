@@ -24,3 +24,14 @@ abstract class CardScanEntity with _$CardScanEntity {
     );
   }
 }
+
+extension CardScanEntityExtension on CardScanEntity {
+  bool get isValid =>
+      cardNumber.isNotEmpty &&
+      cardHolderName.isNotEmpty &&
+      expirationYear > 0 &&
+      expirationMonth > 0 &&
+      cvc != null &&
+      cvc! > 0 &&
+      cvc! < 1000;
+}

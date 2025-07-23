@@ -12,9 +12,11 @@ class CustomTextField extends HookConsumerWidget {
     this.hintText,
     this.isObscureText = false,
     this.isDisabled = false,
+    this.keyboardType = TextInputType.text,
   });
 
   final void Function(String)? onChanged;
+  final TextInputType keyboardType;
   final String? initialValue;
   final String? hintText;
   final bool isObscureText;
@@ -32,6 +34,7 @@ class CustomTextField extends HookConsumerWidget {
 
       focusNode: focusNode,
       obscureText: isObscureText,
+      keyboardType: keyboardType,
       enabled: !isDisabled,
       style: const TextStyle().body1.copyWith(
         color: isDisabled ? ColorStyle.coolGray300 : ColorStyle.gray850,

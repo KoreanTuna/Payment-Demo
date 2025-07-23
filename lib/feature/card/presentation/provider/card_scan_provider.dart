@@ -18,8 +18,20 @@ class CardScan extends _$CardScan {
     return CardScanEntity.empty();
   }
 
-  void updateCardScan(CardScanEntity cardScan) {
-    state = cardScan;
+  void updateCardScan({
+    String? cardNumber,
+    String? cardHolderName,
+    int? expirationYear,
+    int? expirationMonth,
+    int? cvc,
+  }) {
+    state = state.copyWith(
+      cardNumber: cardNumber ?? state.cardNumber,
+      cardHolderName: cardHolderName ?? state.cardHolderName,
+      expirationYear: expirationYear ?? state.expirationYear,
+      expirationMonth: expirationMonth ?? state.expirationMonth,
+      cvc: cvc ?? state.cvc,
+    );
   }
 
   void resetCardScan() {
@@ -34,7 +46,13 @@ class CardScan extends _$CardScan {
 
     return result.map(
       ok: (CardScanEntity entity) {
-        updateCardScan(entity);
+        updateCardScan(
+          cardNumber: entity.cardNumber,
+          cardHolderName: entity.cardHolderName,
+          expirationYear: entity.expirationYear,
+          expirationMonth: entity.expirationMonth,
+          cvc: entity.cvc,
+        );
         return const Result<void>.ok(null);
       },
       error: (error) {
