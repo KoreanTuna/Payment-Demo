@@ -1,6 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:payment_demo/common/widget/custom_button.dart';
+import 'package:payment_demo/core/router/route_path.dart';
+import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/theme/text_style.dart';
 import 'package:payment_demo/environment/app_builder.dart';
 
@@ -23,6 +26,8 @@ class _CardCameraViewScreenState extends State<CardCameraViewScreen> {
   late CameraController _controller;
   late Future<void> _initFuture;
 
+  bool isCameraAvailable = false;
+
   CameraDescription getRearCamera() {
     // 후면 카메라 우선 선택
     return cameras.firstWhere(
@@ -34,6 +39,12 @@ class _CardCameraViewScreenState extends State<CardCameraViewScreen> {
   @override
   void initState() {
     super.initState();
+    if (cameras.isEmpty) {
+      // 카메라가 없을 경우 처리
+      isCameraAvailable = false;
+      return;
+    }
+    isCameraAvailable = true;
     _controller = CameraController(
       getRearCamera(), // default: 후면 카메라
       ResolutionPreset.medium,
@@ -43,31 +54,64 @@ class _CardCameraViewScreenState extends State<CardCameraViewScreen> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    if (isCameraAvailable) {
+      _controller.stopImageStream();
+      _controller.dispose();
+    }
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initFuture,
-      builder: (_, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CameraPreview(
-                _controller,
-                child: AspectRatio(
-                  aspectRatio: widget.aspectRatio,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        if (!isCameraAvailable)
+          Expanded(
+            child: Center(
+              child: Text(
+                '카메라를 사용할 수 없습니다.',
+                style: const TextStyle().subTitle4.copyWith(
+                  color: ColorStyle.coolGray500,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
+            ),
+          )
+        else
+          FutureBuilder(
+            future: _initFuture,
+            builder: (_, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CameraPreview(
+                      _controller,
+                      child: AspectRatio(
+                        aspectRatio: widget.aspectRatio,
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: !isCameraAvailable
+              ? _CardScanDisableGuideWidget(
+                  onPassed: () {
+                    // 직접 입력하기 버튼 클릭 시 동작
+                    context.pushNamed(RoutePath.cardInfoInput);
+                  },
+                )
+              : Column(
                   children: [
                     Text(
-                      '정해진 위치에 카드를 가져다 대고 아래 버튼을 눌러주세요',
+                      '정해진 위치에 카드를 가져다 대고\n아래 버튼을 눌러주세요',
+                      textAlign: TextAlign.center,
                       style: const TextStyle().subTitle5,
                     ),
                     const SizedBox(height: 24),
@@ -92,12 +136,28 @@ class _CardCameraViewScreenState extends State<CardCameraViewScreen> {
                     ),
                   ],
                 ),
-              ),
-            ],
-          );
-        }
-        return const Center(child: CircularProgressIndicator());
-      },
+        ),
+      ],
+    );
+  }
+}
+
+class _CardScanDisableGuideWidget extends StatelessWidget {
+  const _CardScanDisableGuideWidget({
+    required this.onPassed,
+  });
+
+  final VoidCallback onPassed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomButton(
+          label: '직접 입력하기',
+          onPressed: onPassed,
+        ),
+      ],
     );
   }
 }

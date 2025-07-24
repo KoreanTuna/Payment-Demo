@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:payment_demo/core/exception/custom_exception.dart';
 import 'package:payment_demo/core/util/result.dart';
 import 'package:payment_demo/feature/card_scan/data/models/card_scan_model.dart';
 import 'package:payment_demo/feature/card_scan/domain/entities/card_scan_entity.dart';
