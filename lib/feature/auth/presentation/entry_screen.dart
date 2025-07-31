@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:payment_demo/common/widget/custom_button.dart';
-import 'package:payment_demo/common/widget/fade_in_out_text.dart';
+import 'package:payment_demo/common/widget/animation/fade_in_out_text.dart';
 import 'package:payment_demo/common/widget/base/base_screen.dart';
 import 'package:payment_demo/common/widget/image_widget.dart';
 import 'package:payment_demo/common/widget/step_progress_indicator.dart';

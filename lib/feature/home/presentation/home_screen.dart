@@ -11,6 +11,8 @@ import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/theme/text_style.dart';
 import 'package:payment_demo/core/constant/png_image_path.dart';
 import 'package:payment_demo/feature/home/presentation/widget/card_register_widget.dart';
+import 'package:payment_demo/feature/home/presentation/widget/card_reservation_widget.dart';
+import 'package:payment_demo/feature/home/presentation/widget/exchange_guide_widget.dart';
 
 class HomeScreen extends BaseScreen with UserState {
   const HomeScreen({super.key});
@@ -22,34 +24,31 @@ class HomeScreen extends BaseScreen with UserState {
   Widget buildScreen(BuildContext context, WidgetRef ref) {
     final UserEntity user = getUser(ref);
     return Column(
+      spacing: 16,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// 카드 예약
-        ///
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 4,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '카드를 미리 예약하세요',
-              style: const TextStyle().subTitle4,
-            ),
-            Text(
-              '입국 후 바로 픽업할 수 있어요',
-              style: const TextStyle().body1,
+            const ExchangeGuideWidget(),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.notifications_none_rounded,
+                color: ColorStyle.gray850,
+              ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
 
+        /// 카드 예약
+        const CardReservationWidget(),
         if (user.cards.isNotEmpty)
           const Card3D()
         else
           CardRegisterWidget(
             onTap: () => context.pushNamed(RoutePath.cardScan),
           ),
-
-        const SizedBox(height: 12),
 
         const Row(
           spacing: 12,
@@ -68,8 +67,6 @@ class HomeScreen extends BaseScreen with UserState {
             ),
           ],
         ),
-
-        const SizedBox(height: 12),
 
         const _BenefitButton(),
       ],
@@ -95,7 +92,7 @@ class _HomeMenuButton extends StatelessWidget {
           height: 120,
           decoration: BoxDecoration(
             color: ColorStyle.white,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
             boxShadow: const [
               BoxShadow(
                 color: ColorStyle.gray300,
@@ -138,7 +135,7 @@ class _BenefitButton extends StatelessWidget {
         height: 64,
         decoration: BoxDecoration(
           color: ColorStyle.white,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           boxShadow: const [
             BoxShadow(
               color: ColorStyle.gray300,

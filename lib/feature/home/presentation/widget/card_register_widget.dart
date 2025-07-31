@@ -18,7 +18,7 @@ class CardRegisterWidget extends StatelessWidget {
         height: 200,
         decoration: BoxDecoration(
           color: ColorStyle.white,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           boxShadow: const [
             BoxShadow(
               color: ColorStyle.gray300,

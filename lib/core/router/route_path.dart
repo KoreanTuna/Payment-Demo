@@ -6,4 +6,6 @@ abstract class RoutePath {
   static const String signIn = 'signin';
   static const String cardScan = 'cardScan';
   static const String cardInfoInput = 'cardInfoInput';
+  static const String native = 'native';
+  static const String toss = 'toss';
 }

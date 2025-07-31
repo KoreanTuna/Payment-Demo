@@ -13,7 +13,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   flutter_hooks: ^0.21.2
   flutter_scroll_shadow: ^1.2.6
-  flutter_secure_storage: ^4.2.1
+  flutter_secure_storage: ^9.2.4
   flutter_svg: ^2.2.0
   freezed: ^3.0.6
   freezed_annotation: ^3.0.0
@@ -37,6 +37,7 @@ dependencies:
   http_parser: ^4.1.2
   path: ^1.9.1
   image: ^4.5.4
+  tosspayments_widget_sdk_flutter: ^2.1.1
 
 dev_dependencies:
   flutter_test:

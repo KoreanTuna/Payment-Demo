@@ -9,6 +9,7 @@ import 'package:payment_demo/feature/auth/presentation/sign_up_screen.dart';
 import 'package:payment_demo/feature/card_scan/presentation/card_info_input_screen.dart';
 import 'package:payment_demo/feature/card_scan/presentation/card_scan_screen.dart';
 import 'package:payment_demo/feature/home/presentation/home_screen.dart';
+import 'package:payment_demo/feature/native/native_screen.dart';
 import 'package:payment_demo/feature/splash/splash.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -104,6 +105,15 @@ abstract class GoRouterModule {
             pageBuilder: (context, state) => buildFadeTransitionPage(
               state: state,
               child: const CardInfoInputScreen(),
+            ),
+          ),
+          GoRoute(
+            path: RoutePath.native,
+            name: RoutePath.native,
+            builder: (context, state) => const BatteryScreen(),
+            pageBuilder: (context, state) => buildFadeTransitionPage(
+              state: state,
+              child: const BatteryScreen(),
             ),
           ),
         ],
