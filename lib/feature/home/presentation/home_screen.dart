@@ -10,6 +10,7 @@ import 'package:payment_demo/core/router/route_path.dart';
 import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/theme/text_style.dart';
 import 'package:payment_demo/core/constant/png_image_path.dart';
+import 'package:payment_demo/feature/home/presentation/widget/card_list_widget.dart';
 import 'package:payment_demo/feature/home/presentation/widget/card_register_widget.dart';
 import 'package:payment_demo/feature/home/presentation/widget/card_reservation_widget.dart';
 import 'package:payment_demo/feature/home/presentation/widget/exchange_guide_widget.dart';
@@ -23,53 +24,56 @@ class HomeScreen extends BaseScreen with UserState {
   @override
   Widget buildScreen(BuildContext context, WidgetRef ref) {
     final UserEntity user = getUser(ref);
-    return Column(
-      spacing: 16,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const ExchangeGuideWidget(),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_none_rounded,
-                color: ColorStyle.gray850,
+    return SingleChildScrollView(
+      child: Column(
+        spacing: 16,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const ExchangeGuideWidget(),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.notifications_none_rounded,
+                  color: ColorStyle.gray850,
+                ),
               ),
-            ),
-          ],
-        ),
-
-        /// 카드 예약
-        const CardReservationWidget(),
-        if (user.cards.isNotEmpty)
-          const Card3D()
-        else
-          CardRegisterWidget(
-            onTap: () => context.pushNamed(RoutePath.cardScan),
+            ],
           ),
 
-        const Row(
-          spacing: 12,
-          children: [
-            _HomeMenuButton(
-              label: '내 예약',
-              imagePath: PngImagePath.payInteraction3d,
+          /// 카드 예약
+          const CardReservationWidget(),
+          if (user.cards.isNotEmpty)
+            const Card3D()
+          else
+            CardRegisterWidget(
+              onTap: () => context.pushNamed(RoutePath.cardScan),
             ),
-            _HomeMenuButton(
-              label: '관광패스',
-              imagePath: PngImagePath.wallet3d,
-            ),
-            _HomeMenuButton(
-              label: '이용안내',
-              imagePath: PngImagePath.cardHand3d,
-            ),
-          ],
-        ),
+          const CardStackPage(),
 
-        const _BenefitButton(),
-      ],
+          const Row(
+            spacing: 12,
+            children: [
+              _HomeMenuButton(
+                label: '내 예약',
+                imagePath: PngImagePath.payInteraction3d,
+              ),
+              _HomeMenuButton(
+                label: '관광패스',
+                imagePath: PngImagePath.wallet3d,
+              ),
+              _HomeMenuButton(
+                label: '이용안내',
+                imagePath: PngImagePath.cardHand3d,
+              ),
+            ],
+          ),
+
+          const _BenefitButton(),
+        ],
+      ),
     );
   }
 }
