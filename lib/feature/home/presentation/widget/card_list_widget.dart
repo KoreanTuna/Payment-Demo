@@ -165,9 +165,11 @@ class _CardOverlay extends StatelessWidget {
                 tag: 'card-${cards[index].last4Digits}',
                 child: PaymentCardWidget(
                   card: cards[index],
-                  onTap: () {
+                  onTap: () async {
                     onSelect(index);
-                    Navigator.of(context).pop();
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).pop();
+                    });
                   },
                 ),
               ),
@@ -220,4 +222,7 @@ class HeroDialogRoute<T> extends PageRoute<T> {
       child: child,
     );
   }
+
+  @override
+  bool get maintainState => true;
 }
