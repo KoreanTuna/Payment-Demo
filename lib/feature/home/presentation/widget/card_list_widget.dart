@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:payment_demo/core/extension/context_extension.dart';
 import 'package:payment_demo/core/theme/color_style.dart';
@@ -10,15 +12,30 @@ class CardStackPage extends StatefulWidget {
   State<CardStackPage> createState() => _CardStackPageState();
 }
 
-class _CardStackPageState extends State<CardStackPage>
-    with TickerProviderStateMixin {
-  bool isExpanded = false;
-
+class _CardStackPageState extends State<CardStackPage> {
   final List<CardData> cards = [
     CardData('Shinhan The More', '5699', Colors.black),
     CardData('Woori Card', '7892', Colors.amber),
     CardData('KB Olympic', '2095', Colors.grey),
   ];
+
+  void _showOverlay() {
+    Navigator.of(context).push(
+      HeroDialogRoute(
+        builder: (context) {
+          return _CardOverlay(
+            cards: cards,
+            onSelect: (index) {
+              setState(() {
+                final selected = cards.removeAt(index);
+                cards.insert(0, selected);
+              });
+            },
+          );
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,31 +43,28 @@ class _CardStackPageState extends State<CardStackPage>
       children: [
         const SizedBox(height: 20),
         GestureDetector(
-          onTap: () => setState(() => isExpanded = !isExpanded),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            height: isExpanded ? 300 : 70,
+          onTap: _showOverlay,
+          child: SizedBox(
+            height: 70,
             width: context.screenSize.width,
             child: Stack(
               clipBehavior: Clip.none,
               children: List.generate(cards.length, (index) {
-                final offset = isExpanded ? index * 100.0 : index * 16.0;
-                return AnimatedPositioned(
-                  duration: const Duration(milliseconds: 300),
+                final offset = index * 16.0;
+                return Positioned(
                   top: offset,
                   left: 0,
                   right: 0,
-                  child: PaymentCardWidget(card: cards[index]),
+                  child: Hero(
+                    tag: 'card-${cards[index].last4Digits}',
+                    child: PaymentCardWidget(card: cards[index]),
+                  ),
                 );
               }).reversed.toList(),
             ),
           ),
         ),
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          height: isExpanded ? 24 : 100,
-        ),
+        const SizedBox(height: 100),
       ],
     );
   }
@@ -66,37 +80,144 @@ class CardData {
 
 class PaymentCardWidget extends StatelessWidget {
   final CardData card;
+  final VoidCallback? onTap;
 
-  const PaymentCardWidget({super.key, required this.card});
+  const PaymentCardWidget({super.key, required this.card, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: card.color,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: SizedBox(
-        height: 120,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                card.name,
-                style: const TextStyle().subTitle4.copyWith(
-                  color: ColorStyle.white,
-                ),
+    return GestureDetector(
+      onTap: onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            height: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Colors.white.withOpacity(0.3)),
+              gradient: LinearGradient(
+                colors: [
+                  card.color.withOpacity(0.6),
+                  card.color.withOpacity(0.3),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-              Text(
-                card.last4Digits,
-                style: const TextStyle().subTitle6.copyWith(
-                  color: ColorStyle.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
                 ),
-              ),
-            ],
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  card.name,
+                  style: const TextStyle().subTitle4.copyWith(
+                    color: ColorStyle.white,
+                  ),
+                ),
+                Text(
+                  card.last4Digits,
+                  style: const TextStyle().subTitle6.copyWith(
+                    color: ColorStyle.white,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _CardOverlay extends StatelessWidget {
+  const _CardOverlay({
+    required this.cards,
+    required this.onSelect,
+  });
+
+  final List<CardData> cards;
+  final void Function(int) onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        height: 300,
+        width: context.screenSize.width,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: List.generate(cards.length, (index) {
+            final offset = index * 100.0;
+            return Positioned(
+              top: offset,
+              left: 0,
+              right: 0,
+              child: Hero(
+                tag: 'card-${cards[index].last4Digits}',
+                child: PaymentCardWidget(
+                  card: cards[index],
+                  onTap: () {
+                    onSelect(index);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            );
+          }).reversed.toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class HeroDialogRoute<T> extends PageRoute<T> {
+  HeroDialogRoute({required this.builder});
+
+  final WidgetBuilder builder;
+
+  @override
+  bool get opaque => false;
+
+  @override
+  bool get barrierDismissible => true;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 300);
+
+  @override
+  Color get barrierColor => Colors.black54;
+
+  @override
+  String get barrierLabel => 'Popup';
+
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    return builder(context);
+  }
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return FadeTransition(
+      opacity: animation,
+      child: child,
     );
   }
 }
