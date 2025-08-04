@@ -13,7 +13,6 @@ class CardStackPage extends StatefulWidget {
 }
 
 class _CardStackPageState extends State<CardStackPage> {
-
   final List<CardData> cards = [
     CardData('Shinhan The More', '5699', Colors.black),
     CardData('Woori Card', '7892', Colors.amber),
@@ -192,81 +191,6 @@ class _CardOverlay extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _CardOverlay extends StatefulWidget {
-  const _CardOverlay({
-    required this.cards,
-    required this.onSelect,
-    required this.onClose,
-  });
-
-  final List<CardData> cards;
-  final void Function(int) onSelect;
-  final VoidCallback onClose;
-
-  @override
-  State<_CardOverlay> createState() => _CardOverlayState();
-}
-
-class _CardOverlayState extends State<_CardOverlay>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 300))
-          ..forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return GestureDetector(
-          onTap: widget.onClose,
-          child: Container(
-            color: Colors.black.withOpacity(0.5 * _controller.value),
-            child: Center(
-              child: GestureDetector(
-                onTap: () {},
-                child: SizedBox(
-                  height: 300,
-                  width: context.screenSize.width,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: List.generate(widget.cards.length, (index) {
-                      final start = index * 16.0;
-                      final end = index * 100.0;
-                      final offset = lerpDouble(start, end, _controller.value)!;
-                      return Positioned(
-                        top: offset,
-                        left: 0,
-                        right: 0,
-                        child: PaymentCardWidget(
-                          card: widget.cards[index],
-                          onTap: () => widget.onSelect(index),
-                        ),
-                      );
-                    }).reversed.toList(),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }
