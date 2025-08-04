@@ -150,32 +150,33 @@ class _CardOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        height: 300,
-        width: context.screenSize.width,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: List.generate(cards.length, (index) {
-            final offset = index * 100.0;
-            return Positioned(
-              top: offset,
-              left: 0,
-              right: 0,
-              child: Hero(
-                tag: 'card-${cards[index].last4Digits}',
-                child: PaymentCardWidget(
-                  card: cards[index],
-                  onTap: () async {
-                    onSelect(index);
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: SizedBox(
+          height: 300,
+          width: context.screenSize.width,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: List.generate(cards.length, (index) {
+              final offset = index * 100.0;
+              return Positioned(
+                top: offset,
+                left: 0,
+                right: 0,
+                child: Hero(
+                  tag: 'card-${cards[index].last4Digits}',
+                  child: PaymentCardWidget(
+                    card: cards[index],
+                    onTap: () {
+                      onSelect(index);
                       Navigator.of(context).pop();
-                    });
-                  },
+                    },
+                  ),
                 ),
-              ),
-            );
-          }).reversed.toList(),
+              );
+            }).reversed.toList(),
+          ),
         ),
       ),
     );
