@@ -13,8 +13,6 @@ class CardStackPage extends StatefulWidget {
 }
 
 class _CardStackPageState extends State<CardStackPage> {
-  OverlayEntry? _overlayEntry;
-
   final List<CardData> cards = [
     CardData('Shinhan The More', '5699', Colors.black),
     CardData('Woori Card', '7892', Colors.amber),
@@ -22,25 +20,21 @@ class _CardStackPageState extends State<CardStackPage> {
   ];
 
   void _showOverlay() {
-    _overlayEntry = OverlayEntry(
-      builder: (context) => _CardOverlay(
-        cards: cards,
-        onClose: _hideOverlay,
-        onSelect: (index) {
-          setState(() {
-            final selected = cards.removeAt(index);
-            cards.insert(0, selected);
-          });
-          _hideOverlay();
+    Navigator.of(context).push(
+      HeroDialogRoute(
+        builder: (context) {
+          return _CardOverlay(
+            cards: cards,
+            onSelect: (index) {
+              setState(() {
+                final selected = cards.removeAt(index);
+                cards.insert(0, selected);
+              });
+            },
+          );
         },
       ),
     );
-    Overlay.of(context, rootOverlay: true).insert(_overlayEntry!);
-  }
-
-  void _hideOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
   }
 
   @override
@@ -61,7 +55,10 @@ class _CardStackPageState extends State<CardStackPage> {
                   top: offset,
                   left: 0,
                   right: 0,
-                  child: PaymentCardWidget(card: cards[index]),
+                  child: Hero(
+                    tag: 'card-${cards[index].last4Digits}',
+                    child: PaymentCardWidget(card: cards[index]),
+                  ),
                 );
               }).reversed.toList(),
             ),
@@ -141,77 +138,92 @@ class PaymentCardWidget extends StatelessWidget {
   }
 }
 
-class _CardOverlay extends StatefulWidget {
+
+class _CardOverlay extends StatelessWidget {
   const _CardOverlay({
     required this.cards,
     required this.onSelect,
-    required this.onClose,
   });
 
   final List<CardData> cards;
   final void Function(int) onSelect;
-  final VoidCallback onClose;
-
-  @override
-  State<_CardOverlay> createState() => _CardOverlayState();
-}
-
-class _CardOverlayState extends State<_CardOverlay>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 300))
-          ..forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return GestureDetector(
-          onTap: widget.onClose,
-          child: Container(
-            color: Colors.black.withOpacity(0.5 * _controller.value),
-            child: Center(
-              child: GestureDetector(
-                onTap: () {},
-                child: SizedBox(
-                  height: 300,
-                  width: context.screenSize.width,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: List.generate(widget.cards.length, (index) {
-                      final start = index * 16.0;
-                      final end = index * 100.0;
-                      final offset = lerpDouble(start, end, _controller.value)!;
-                      return Positioned(
-                        top: offset,
-                        left: 0,
-                        right: 0,
-                        child: PaymentCardWidget(
-                          card: widget.cards[index],
-                          onTap: () => widget.onSelect(index),
-                        ),
-                      );
-                    }).reversed.toList(),
-                  ),
+    return Center(
+      child: SizedBox(
+        height: 300,
+        width: context.screenSize.width,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: List.generate(cards.length, (index) {
+            final offset = index * 100.0;
+            return Positioned(
+              top: offset,
+              left: 0,
+              right: 0,
+              child: Hero(
+                tag: 'card-${cards[index].last4Digits}',
+                child: PaymentCardWidget(
+                  card: cards[index],
+                  onTap: () async {
+                    onSelect(index);
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).pop();
+                    });
+                  },
                 ),
               ),
-            ),
-          ),
-        );
-      },
+            );
+          }).reversed.toList(),
+        ),
+      ),
     );
   }
+}
+
+class HeroDialogRoute<T> extends PageRoute<T> {
+  HeroDialogRoute({required this.builder});
+
+  final WidgetBuilder builder;
+
+  @override
+  bool get opaque => false;
+
+  @override
+  bool get barrierDismissible => true;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 300);
+
+  @override
+  Color get barrierColor => Colors.black54;
+
+  @override
+  String get barrierLabel => 'Popup';
+
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    return builder(context);
+  }
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return FadeTransition(
+      opacity: animation,
+      child: child,
+    );
+  }
+
+  @override
+  bool get maintainState => true;
 }
