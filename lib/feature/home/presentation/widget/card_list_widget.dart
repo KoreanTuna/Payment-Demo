@@ -12,12 +12,36 @@ class CardStackPage extends StatefulWidget {
   State<CardStackPage> createState() => _CardStackPageState();
 }
 
-class _CardStackPageState extends State<CardStackPage> {
-  final List<CardData> cards = [
+class _CardStackPageState extends State<CardStackPage>
+    with SingleTickerProviderStateMixin {
+  List<CardData> cards = [
     CardData('Shinhan The More', '5699', Colors.black),
     CardData('Woori Card', '7892', Colors.amber),
     CardData('KB Olympic', '2095', Colors.grey),
   ];
+
+  int? _selectedIndex;
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   void _showOverlay() {
     Navigator.of(context).push(
@@ -25,12 +49,22 @@ class _CardStackPageState extends State<CardStackPage> {
         builder: (context) {
           return _CardOverlay(
             cards: cards,
-            onSelect: (index) {
+            onSelect: (index) async {
               setState(() {
-                final selected = cards.removeAt(index);
-                cards.insert(0, selected);
+                _selectedIndex = index;
+              });
+              await _controller.forward();
+              setState(() {
+                cards = [
+                  cards[index],
+                  ...cards.where((card) => card != cards[index]),
+                ];
+                _selectedIndex = null;
+                _controller.reset();
               });
             },
+            selectedIndex: _selectedIndex,
+            fadeAnimation: _fadeAnimation,
           );
         },
       ),
@@ -57,7 +91,10 @@ class _CardStackPageState extends State<CardStackPage> {
                   right: 0,
                   child: Hero(
                     tag: 'card-${cards[index].last4Digits}',
-                    child: PaymentCardWidget(card: cards[index]),
+                    child: PaymentCardWidget(
+                      key: ValueKey(cards[index].last4Digits),
+                      card: cards[index],
+                    ),
                   ),
                 );
               }).reversed.toList(),
@@ -138,44 +175,67 @@ class PaymentCardWidget extends StatelessWidget {
   }
 }
 
-
 class _CardOverlay extends StatelessWidget {
   const _CardOverlay({
     required this.cards,
     required this.onSelect,
+    required this.selectedIndex,
+    required this.fadeAnimation,
   });
 
   final List<CardData> cards;
   final void Function(int) onSelect;
+  final int? selectedIndex;
+  final Animation<double> fadeAnimation;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: SizedBox(
-          height: 300,
-          width: context.screenSize.width,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: List.generate(cards.length, (index) {
-              final offset = index * 100.0;
-              return Positioned(
-                top: offset,
-                left: 0,
-                right: 0,
-                child: Hero(
-                  tag: 'card-${cards[index].last4Digits}',
-                  child: PaymentCardWidget(
-                    card: cards[index],
-                    onTap: () {
-                      onSelect(index);
-                      Navigator.of(context).pop();
+    return Material(
+      color: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Center(
+          child: SizedBox(
+            height: 300,
+            width: context.screenSize.width,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: List.generate(cards.length, (index) {
+                final offset = index * 100.0;
+                final isSelected = selectedIndex == index;
+                return Positioned(
+                  top: offset,
+                  left: 0,
+                  right: 0,
+                  child: AnimatedBuilder(
+                    animation: fadeAnimation,
+                    builder: (context, child) {
+                      return Opacity(
+                        opacity: isSelected
+                            ? fadeAnimation.value
+                            : (selectedIndex == null ? 1.0 : 0.5),
+                        child: Transform.scale(
+                          scale: isSelected
+                              ? 1.05 + 0.05 * fadeAnimation.value
+                              : 1.0,
+                          child: child,
+                        ),
+                      );
                     },
+                    child: Hero(
+                      tag: 'card-${cards[index].last4Digits}',
+                      child: PaymentCardWidget(
+                        card: cards[index],
+                        onTap: () {
+                          onSelect(index);
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              );
-            }).reversed.toList(),
+                );
+              }).reversed.toList(),
+            ),
           ),
         ),
       ),
