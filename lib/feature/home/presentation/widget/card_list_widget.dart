@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:payment_demo/core/extension/context_extension.dart';
+import 'package:payment_demo/core/router/base/hero_dialog_route.dart';
 import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/theme/text_style.dart';
 
@@ -190,101 +191,52 @@ class _CardOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Center(
-          child: SizedBox(
-            height: 300,
-            width: context.screenSize.width,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: List.generate(cards.length, (index) {
-                final offset = index * 100.0;
-                final isSelected = selectedIndex == index;
-                return Positioned(
-                  top: offset,
-                  left: 0,
-                  right: 0,
-                  child: AnimatedBuilder(
-                    animation: fadeAnimation,
-                    builder: (context, child) {
-                      return Opacity(
-                        opacity: isSelected
-                            ? fadeAnimation.value
-                            : (selectedIndex == null ? 1.0 : 0.5),
-                        child: Transform.scale(
-                          scale: isSelected
-                              ? 1.05 + 0.05 * fadeAnimation.value
-                              : 1.0,
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: Hero(
-                      tag: 'card-${cards[index].last4Digits}',
-                      child: PaymentCardWidget(
-                        card: cards[index],
-                        onTap: () {
-                          onSelect(index);
-                          Navigator.of(context).pop();
-                        },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Center(
+        child: SizedBox(
+          height: 300,
+          width: context.screenSize.width,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: List.generate(cards.length, (index) {
+              final offset = index * 100.0;
+              final isSelected = selectedIndex == index;
+              return Positioned(
+                top: offset,
+                left: 0,
+                right: 0,
+                child: AnimatedBuilder(
+                  animation: fadeAnimation,
+                  builder: (context, child) {
+                    return Opacity(
+                      opacity: isSelected
+                          ? fadeAnimation.value
+                          : (selectedIndex == null ? 1.0 : 0.5),
+                      child: Transform.scale(
+                        scale: isSelected
+                            ? 1.05 + 0.05 * fadeAnimation.value
+                            : 1.0,
+                        child: child,
                       ),
+                    );
+                  },
+                  child: Hero(
+                    tag: 'card-${cards[index].last4Digits}',
+                    child: PaymentCardWidget(
+                      card: cards[index],
+                      onTap: () {
+                        onSelect(index);
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ),
-                );
-              }).reversed.toList(),
-            ),
+                ),
+              );
+            }).reversed.toList(),
           ),
         ),
       ),
     );
   }
-}
-
-class HeroDialogRoute<T> extends PageRoute<T> {
-  HeroDialogRoute({required this.builder});
-
-  final WidgetBuilder builder;
-
-  @override
-  bool get opaque => false;
-
-  @override
-  bool get barrierDismissible => true;
-
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 300);
-
-  @override
-  Color get barrierColor => Colors.black54;
-
-  @override
-  String get barrierLabel => 'Popup';
-
-  @override
-  Widget buildPage(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-  ) {
-    return builder(context);
-  }
-
-  @override
-  Widget buildTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    return FadeTransition(
-      opacity: animation,
-      child: child,
-    );
-  }
-
-  @override
-  bool get maintainState => true;
 }

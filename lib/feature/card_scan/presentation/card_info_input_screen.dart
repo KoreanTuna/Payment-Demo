@@ -70,14 +70,20 @@ class CardInfoInputScreen extends BaseScreen
                     isDisabled: cardScan.cardHolderName.isNotEmpty,
                     initialValue: cardScan.cardHolderName,
                     hintText: '카드 소지자의 이름을 입력하세요',
-                    onChanged: (String value) {},
+                    onChanged: (String value) => updateCardHolderName(
+                      ref: ref,
+                      cardHolderName: value,
+                    ),
                   ),
                   InfoInputWidget(
                     title: '카드 번호',
                     isDisabled: cardScan.cardNumber.isNotEmpty,
                     initialValue: cardScan.cardNumber,
                     hintText: '카드 번호를 입력하세요',
-                    onChanged: (String value) {},
+                    onChanged: (String value) => updateCardNumber(
+                      ref: ref,
+                      cardNumber: value,
+                    ),
                   ),
                   const Divider(
                     height: 48,
@@ -99,7 +105,10 @@ class CardInfoInputScreen extends BaseScreen
                         isDisabled: cardScan.expirationYear != 0,
                         initialValue: cardScan.expirationYear.toString(),
                         hintText: '유효기간 년도를 입력하세요',
-                        onChanged: (String value) {},
+                        onChanged: (String value) => updateExpirationYear(
+                          ref: ref,
+                          expirationYear: int.tryParse(value) ?? 0,
+                        ),
                       ),
                       InfoInputWidget(
                         width: 80,
@@ -107,7 +116,10 @@ class CardInfoInputScreen extends BaseScreen
                         isDisabled: cardScan.expirationMonth != 0,
                         initialValue: cardScan.expirationMonth.toString(),
                         hintText: '유효기간 월을 입력하세요',
-                        onChanged: (String value) {},
+                        onChanged: (String value) => updateExpirationMonth(
+                          ref: ref,
+                          expirationMonth: int.tryParse(value) ?? 0,
+                        ),
                       ),
                     ],
                   ),

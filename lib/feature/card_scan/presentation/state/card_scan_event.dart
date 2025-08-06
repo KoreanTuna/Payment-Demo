@@ -8,4 +8,38 @@ mixin class CardScanEvent {
   }) {
     ref.read(cardScanProvider.notifier).updateCardScan(cvc: cvc);
   }
+
+  void updateCardHolderName({
+    required WidgetRef ref,
+    required String cardHolderName,
+  }) {
+    ref
+        .read(cardScanProvider.notifier)
+        .updateCardScan(cardHolderName: cardHolderName);
+  }
+
+  void updateCardNumber({
+    required WidgetRef ref,
+    required String cardNumber,
+  }) {
+    ref.read(cardScanProvider.notifier).updateCardScan(cardNumber: cardNumber);
+  }
+
+  void updateExpirationMonth({
+    required WidgetRef ref,
+    required int expirationMonth,
+  }) {
+    ref
+        .read(cardScanProvider.notifier)
+        .updateCardScan(expirationMonth: expirationMonth);
+  }
+
+  void updateExpirationYear({
+    required WidgetRef ref,
+    required int expirationYear,
+  }) {
+    ref
+        .read(cardScanProvider.notifier)
+        .updateCardScan(expirationYear: expirationYear);
+  }
 }
