@@ -56,10 +56,6 @@ class _CardStackPageState extends State<CardStackPage>
               });
               await _controller.forward();
               setState(() {
-                cards = [
-                  cards[index],
-                  ...cards.where((card) => card != cards[index]),
-                ];
                 _selectedIndex = null;
                 _controller.reset();
               });
@@ -231,7 +227,6 @@ class _CardOverlay extends StatelessWidget {
                       child: PaymentCardWidget(
                         card: cards[index],
                         onTap: () {
-                          onSelect(index);
                           Navigator.of(context).pop();
                         },
                       ),
