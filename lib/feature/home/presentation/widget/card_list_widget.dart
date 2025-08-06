@@ -92,9 +92,12 @@ class _CardStackPageState extends State<CardStackPage>
                   right: 0,
                   child: Hero(
                     tag: 'card-${cards[index].last4Digits}',
-                    child: PaymentCardWidget(
-                      key: ValueKey(cards[index].last4Digits),
-                      card: cards[index],
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: PaymentCardWidget(
+                        key: ValueKey(cards[index].last4Digits),
+                        card: cards[index],
+                      ),
                     ),
                   ),
                 );
@@ -223,12 +226,15 @@ class _CardOverlay extends StatelessWidget {
                   },
                   child: Hero(
                     tag: 'card-${cards[index].last4Digits}',
-                    child: PaymentCardWidget(
-                      card: cards[index],
-                      onTap: () {
-                        onSelect(index);
-                        Navigator.of(context).pop();
-                      },
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: PaymentCardWidget(
+                        card: cards[index],
+                        onTap: () {
+                          onSelect(index);
+                          Navigator.of(context).pop();
+                        },
+                      ),
                     ),
                   ),
                 ),
