@@ -3,7 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:payment_demo/core/router/route_path.dart';
 
 class PaymentSuccessScreen extends StatelessWidget {
-  const PaymentSuccessScreen({super.key});
+  final String? price;
+  final String? card;
+
+  const PaymentSuccessScreen({super.key, this.price, this.card});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,8 @@ class PaymentSuccessScreen extends StatelessWidget {
                 color: Colors.green, size: 80),
             const SizedBox(height: 16),
             const Text('결제가 성공적으로 완료되었습니다.'),
+            if (price != null) Text('결제 금액: $price'),
+            if (card != null) Text('카드 정보: $card'),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () => context.goNamed(RoutePath.home),
