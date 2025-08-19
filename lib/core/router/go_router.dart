@@ -130,10 +130,17 @@ abstract class GoRouterModule {
           GoRoute(
             path: RoutePath.paymentSuccess,
             name: RoutePath.paymentSuccess,
-            builder: (context, state) => const PaymentSuccessScreen(),
+            builder: (context, state) {
+              final price = state.uri.queryParameters['price'];
+              final card = state.uri.queryParameters['card'];
+              return PaymentSuccessScreen(price: price, card: card);
+            },
             pageBuilder: (context, state) => buildFadeTransitionPage(
               state: state,
-              child: const PaymentSuccessScreen(),
+              child: PaymentSuccessScreen(
+                price: state.uri.queryParameters['price'],
+                card: state.uri.queryParameters['card'],
+              ),
             ),
           ),
         ],

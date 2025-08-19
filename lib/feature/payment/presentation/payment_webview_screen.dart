@@ -48,7 +48,10 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
                   switch (uri.host) {
                     case 'success':
                       if (mounted) {
-                        context.goNamed(RoutePath.paymentSuccess);
+                        context.goNamed(
+                          RoutePath.paymentSuccess,
+                          queryParameters: uri.queryParameters,
+                        );
                       }
                       break;
                     case 'failure':
