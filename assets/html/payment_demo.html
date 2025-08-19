@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Payment Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding:20px; }
+    button { padding:10px 20px; margin:5px; font-size:16px; }
+  </style>
+</head>
+<body>
+  <h1>결제 데모 페이지</h1>
+  <button onclick="location.href='paymentdemo://success'">결제 성공</button>
+  <button onclick="location.href='paymentdemo://failure?message=결제%20실패'">결제 실패</button>
+</body>
+</html>

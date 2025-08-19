@@ -38,6 +38,7 @@ dependencies:
   path: ^1.9.1
   image: ^4.5.4
   tosspayments_widget_sdk_flutter: ^2.1.1
+  flutter_inappwebview: ^5.8.0
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,7 @@ flutter:
     - assets/images/
     - assets/images/illust/3d/
     - assets/fonts/
+    - assets/html/
 
   fonts:
     - family: Pretendard

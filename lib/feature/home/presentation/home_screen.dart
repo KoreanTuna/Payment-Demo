@@ -72,6 +72,10 @@ class HomeScreen extends BaseScreen with UserState {
           ),
 
           const _BenefitButton(),
+          TextButton(
+            onPressed: () => context.pushNamed(RoutePath.payment),
+            child: const Text('결제 데모 열기'),
+          ),
         ],
       ),
     );

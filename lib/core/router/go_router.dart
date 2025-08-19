@@ -11,6 +11,8 @@ import 'package:payment_demo/feature/card_scan/presentation/card_scan_screen.dar
 import 'package:payment_demo/feature/home/presentation/home_screen.dart';
 import 'package:payment_demo/feature/native/native_screen.dart';
 import 'package:payment_demo/feature/splash/splash.dart';
+import 'package:payment_demo/feature/payment/presentation/payment_webview_screen.dart';
+import 'package:payment_demo/feature/payment/presentation/payment_success_screen.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -114,6 +116,24 @@ abstract class GoRouterModule {
             pageBuilder: (context, state) => buildFadeTransitionPage(
               state: state,
               child: const BatteryScreen(),
+            ),
+          ),
+          GoRoute(
+            path: RoutePath.payment,
+            name: RoutePath.payment,
+            builder: (context, state) => const PaymentWebViewScreen(),
+            pageBuilder: (context, state) => buildFadeTransitionPage(
+              state: state,
+              child: const PaymentWebViewScreen(),
+            ),
+          ),
+          GoRoute(
+            path: RoutePath.paymentSuccess,
+            name: RoutePath.paymentSuccess,
+            builder: (context, state) => const PaymentSuccessScreen(),
+            pageBuilder: (context, state) => buildFadeTransitionPage(
+              state: state,
+              child: const PaymentSuccessScreen(),
             ),
           ),
         ],
