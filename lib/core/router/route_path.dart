@@ -8,4 +8,6 @@ abstract class RoutePath {
   static const String cardInfoInput = 'cardInfoInput';
   static const String native = 'native';
   static const String toss = 'toss';
+  static const String payment = 'payment';
+  static const String paymentSuccess = 'paymentSuccess';
 }
