@@ -12,14 +12,18 @@ The following diagram outlines the project's main directories and feature module
 flowchart TD
     A[Project Root]
     A --> lib
-    A --> assets
-    A --> pubspec.yaml
 
     lib --> common
     lib --> core
     lib --> environment
     lib --> screen(feature)
     lib --> main.dart
+
+    core --> util
+    core --> constant
+    core --> router
+    core --> theme
+    core --> extension
 
     screen(feature) --> signIn
     screen(feature) --> card
@@ -29,6 +33,8 @@ flowchart TD
     signIn --> presentation
     signIn --> domain
     signIn --> data
+
+    
 
 
 ```
