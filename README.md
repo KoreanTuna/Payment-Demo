@@ -21,7 +21,7 @@ flowchart TD
 
     common --> data
     common --> domain
-    common --> presentation
+    common --> common presentation
 
     environment --> config
     environment --> flavor
