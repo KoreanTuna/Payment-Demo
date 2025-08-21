@@ -11,14 +11,8 @@ The following diagram outlines the project's main directories and feature module
 ```mermaid
 flowchart TD
     A[Project Root]
-    A --> android
-    A --> ios
     A --> lib
     A --> assets
-    A --> web
-    A --> linux
-    A --> macos
-    A --> windows
     A --> pubspec.yaml
 
     lib --> common
