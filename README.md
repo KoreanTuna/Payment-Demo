@@ -19,8 +19,8 @@ flowchart TD
     lib --> screen/feature
     lib --> main.dart
 
-    common --> data
-    common --> domain
+    common --> commonData
+    common --> commonDomain
     common --> commonPresentation
 
     environment --> config
@@ -40,6 +40,15 @@ flowchart TD
     signIn --> presentation
     signIn --> domain
     signIn --> data
+
+    data --> datasource
+    data --> repository
+    data --> models
+
+    domain --> repository-interface
+    domain --> usecase
+    domain --> entities
+    
 
     
 
