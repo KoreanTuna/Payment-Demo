@@ -48,7 +48,9 @@ flowchart TD
     domain --> repository-interface
     domain --> usecase
     domain --> entities
-    
+
+    presentation --> widget
+    presentation --> providers
 
     
 
