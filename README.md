@@ -12,6 +12,7 @@ The following diagram outlines the project's main directories and feature module
 flowchart TD
     A[Project Root]
     A --> lib
+    A --> protos
 
     lib --> common
     lib --> core
@@ -69,10 +70,13 @@ flowchart LR
     end
     subgraph Domain
         Usecase[Usecase]
+        Entities[Entities]
         RepositoryInterface[Repository Interface]
     end
     subgraph Data
         RepositoryImpl[Repository Implementation]
+        Models[Models]
+        gRPCMapper[gRPC Mapper]
         DataSource[(Data Source)]
     end
 
