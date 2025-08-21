@@ -18,15 +18,13 @@ flowchart TD
     lib --> common
     lib --> core
     lib --> environment
-    lib --> feature
+    lib --> screen(feature)
     lib --> main.dart
 
-    feature --> auth
-    feature --> card_scan
-    feature --> home
-    feature --> native
-    feature --> payment
-    feature --> splash
+    screen(feature) --> signIn
+    screen(feature) --> card
+    screen(feature) --> payment
+    screen(feature) --> splash
 
     auth --> presentation
     auth --> domain
