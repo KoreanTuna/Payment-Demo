@@ -19,6 +19,9 @@ flowchart TD
     lib --> screen(feature)
     lib --> main.dart
 
+    environment --> config
+    environment --> flavor
+
     core --> util
     core --> constant
     core --> router
