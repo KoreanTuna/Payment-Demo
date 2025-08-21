@@ -16,8 +16,12 @@ flowchart TD
     lib --> common
     lib --> core
     lib --> environment
-    lib --> screen(feature)
+    lib --> screen/feature
     lib --> main.dart
+
+    common --> data
+    common --> domain
+    common --> presentation
 
     environment --> config
     environment --> flavor
@@ -28,10 +32,10 @@ flowchart TD
     core --> theme
     core --> extension
 
-    screen(feature) --> signIn
-    screen(feature) --> card
-    screen(feature) --> payment
-    screen(feature) --> splash
+    screen/feature --> signIn
+    screen/feature --> card
+    screen/feature --> payment
+    screen/feature --> splash
 
     signIn --> presentation
     signIn --> domain
