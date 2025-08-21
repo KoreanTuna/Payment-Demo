@@ -26,17 +26,11 @@ flowchart TD
     screen(feature) --> payment
     screen(feature) --> splash
 
-    auth --> presentation
-    auth --> domain
-    auth --> data
+    signIn --> presentation
+    signIn --> domain
+    signIn --> data
 
-    card_scan --> presentation
-    card_scan --> domain
-    card_scan --> data
 
-    home --> presentation
-    payment --> presentation
-    splash --> presentation
 ```
 
 ## Architecture Overview
