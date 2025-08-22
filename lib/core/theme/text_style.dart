@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:payment_demo/core/theme/color_style.dart';
 
 const String pretendardFontFamily = 'Pretendard';

@@ -13,7 +13,7 @@ class ExchangeGuideWidget extends StatelessWidget {
       children: [
         Text(
           '환율',
-          style: const TextStyle().subTitle4,
+          style: const TextStyle().subTitle4.copyWith(),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),

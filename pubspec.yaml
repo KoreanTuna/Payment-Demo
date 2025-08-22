@@ -40,6 +40,10 @@ dependencies:
   tosspayments_widget_sdk_flutter: ^2.1.1
   flutter_inappwebview: ^6.1.5
   url_launcher: ^6.3.2
+  grpc: ^4.1.0
+  protobuf: ^4.2.0
+  meta: ^1.16.0
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:

@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package card.v1;
+
+
+message Card {
+  string id = 1;
+  string number = 2;
+  string name = 3;
+  string expiration_date = 4;
+  string cvv = 5;
+}
+
+message GetCardRequest {
+  string id = 1;
+}
+
+message GetCardResponse {
+  Card card = 1;
+}
+
+message ListCardsRequest {
+  // pagination
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListCardsResponse {
+  repeated Card cards = 1;
+  string next_page_token = 2;
+}
+
+service CardService {
+  rpc GetCard (GetCardRequest) returns (GetCardResponse);
+  rpc ListCards (ListCardsRequest) returns (ListCardsResponse);
+}

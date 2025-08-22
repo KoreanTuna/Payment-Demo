@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/theme/text_style.dart';
 
@@ -41,6 +42,7 @@ class CardRegisterWidget extends StatelessWidget {
               '카드 등록하기',
               style: const TextStyle().body2.copyWith(
                 color: ColorStyle.gray700,
+                fontSize: 14.sp,
               ),
             ),
           ],

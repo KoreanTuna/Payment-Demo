@@ -10,6 +10,7 @@ import 'package:payment_demo/core/router/route_path.dart';
 import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/theme/text_style.dart';
 import 'package:payment_demo/core/constant/png_image_path.dart';
+import 'package:payment_demo/feature/home/presentation/wallet.dart';
 import 'package:payment_demo/feature/home/presentation/widget/card_list_widget.dart';
 import 'package:payment_demo/feature/home/presentation/widget/card_register_widget.dart';
 import 'package:payment_demo/feature/home/presentation/widget/card_reservation_widget.dart';
@@ -75,6 +76,14 @@ class HomeScreen extends BaseScreen with UserState {
           TextButton(
             onPressed: () => context.pushNamed(RoutePath.payment),
             child: const Text('결제 데모 열기'),
+          ),
+          SizedBox(
+            height: 420,
+            child: const NotchedCard(),
+          ),
+          const SizedBox(
+            height: 240,
+            width: double.infinity,
           ),
         ],
       ),

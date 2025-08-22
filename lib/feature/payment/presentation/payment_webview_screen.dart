@@ -4,6 +4,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
 import 'package:payment_demo/common/widget/dialog/common_dialog.dart';
 import 'package:payment_demo/core/router/route_path.dart';
+import 'package:payment_demo/core/util/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PaymentWebViewScreen extends StatefulWidget {
@@ -87,6 +88,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
 
             shouldOverrideUrlLoading: (controller, navigationAction) async {
               final uri = navigationAction.request.url;
+              logger.d('${navigationAction.request.url}');
               if (uri == null) {
                 return NavigationActionPolicy.ALLOW;
               }
