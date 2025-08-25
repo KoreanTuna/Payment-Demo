@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:payment_demo/common/domain/entities/user_entity.dart';
-import 'package:payment_demo/common/provider/language_provider.dart';
 import 'package:payment_demo/common/provider/state/user_state.dart';
 import 'package:payment_demo/common/widget/base/base_screen.dart';
 import 'package:payment_demo/common/widget/card_widget.dart';
@@ -11,7 +10,7 @@ import 'package:payment_demo/core/router/route_path.dart';
 import 'package:payment_demo/core/theme/color_style.dart';
 import 'package:payment_demo/core/theme/text_style.dart';
 import 'package:payment_demo/core/constant/png_image_path.dart';
-import 'package:payment_demo/core/util/language_util.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:payment_demo/feature/home/presentation/wallet.dart';
 import 'package:payment_demo/feature/home/presentation/widget/card_list_widget.dart';
 import 'package:payment_demo/feature/home/presentation/widget/card_register_widget.dart';
@@ -26,7 +25,6 @@ class HomeScreen extends BaseScreen with UserState {
 
   @override
   Widget buildScreen(BuildContext context, WidgetRef ref) {
-    ref.watch(languageProvider);
     final UserEntity user = getUser(ref);
     return SingleChildScrollView(
       child: Column(
@@ -61,15 +59,15 @@ class HomeScreen extends BaseScreen with UserState {
             spacing: 12,
             children: [
               _HomeMenuButton(
-                label: LanguageUtil.getString('home_my_reservation'),
+                label: 'home_my_reservation'.tr(),
                 imagePath: PngImagePath.payInteraction3d,
               ),
               _HomeMenuButton(
-                label: LanguageUtil.getString('home_tour_pass'),
+                label: 'home_tour_pass'.tr(),
                 imagePath: PngImagePath.wallet3d,
               ),
               _HomeMenuButton(
-                label: LanguageUtil.getString('home_user_guide'),
+                label: 'home_user_guide'.tr(),
                 imagePath: PngImagePath.cardHand3d,
               ),
             ],
@@ -78,7 +76,11 @@ class HomeScreen extends BaseScreen with UserState {
           const _BenefitButton(),
           TextButton(
             onPressed: () => context.pushNamed(RoutePath.payment),
-            child: Text(LanguageUtil.getString('home_open_payment_demo')),
+            child: Text(
+              'home_open_payment_demo'.tr(
+                namedArgs: {'user': user.name},
+              ),
+            ),
           ),
           SizedBox(
             height: 420,
@@ -170,7 +172,7 @@ class _BenefitButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              LanguageUtil.getString('home_view_card_benefits'),
+              'home_view_card_benefits'.tr(),
               style: const TextStyle().subTitle5,
             ),
             const Icon(Icons.chevron_right_rounded),
