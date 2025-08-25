@@ -1,11 +1,12 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hooks_riverpod/legacy.dart';
 import 'package:payment_demo/core/util/language_util.dart';
 import 'package:payment_demo/core/util/shared_pref_util.dart';
 import 'package:payment_demo/environment/getit.dart';
 
 /// Riverpod provider to handle the current language of the app.
-final languageProvider =
-    StateNotifierProvider<LanguageNotifier, String>((ref) => LanguageNotifier());
+final languageProvider = StateNotifierProvider<LanguageNotifier, String>(
+  (ref) => LanguageNotifier(),
+);
 
 class LanguageNotifier extends StateNotifier<String> {
   LanguageNotifier() : super('en') {
